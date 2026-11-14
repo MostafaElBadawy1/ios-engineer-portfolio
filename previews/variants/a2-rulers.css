@@ -1,0 +1,27 @@
+/* A2 · Rulers: the canvas is measured. Guides snap to the icon you point at. */
+.canvas { padding-top: calc(clamp(32px, 6vw, 88px) + 24px); padding-left: calc(clamp(16px, 5vw, 72px) + 24px); }
+.backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.rx, .ry { position: absolute; background: var(--bg); color: rgb(143 165 179 / 0.7); font: 400 9.5px/1 "Red Hat Mono", monospace; z-index: 2; }
+.rx { top: 0; left: 24px; right: 0; height: 24px; border-bottom: 1px solid var(--line);
+  background-image:
+    repeating-linear-gradient(90deg, rgb(253 240 213 / 0.22) 0 1px, transparent 1px 100px),
+    repeating-linear-gradient(90deg, rgb(253 240 213 / 0.13) 0 1px, transparent 1px 10px);
+  background-size: 100% 12px, 100% 5px; background-position: 0 100%, 0 100%; background-repeat: no-repeat; }
+.ry { top: 24px; left: 0; bottom: 0; width: 24px; border-right: 1px solid var(--line);
+  background-image:
+    repeating-linear-gradient(180deg, rgb(253 240 213 / 0.22) 0 1px, transparent 1px 100px),
+    repeating-linear-gradient(180deg, rgb(253 240 213 / 0.13) 0 1px, transparent 1px 10px);
+  background-size: 12px 100%, 5px 100%; background-position: 100% 0, 100% 0; background-repeat: no-repeat; }
+.corner { position: absolute; top: 0; left: 0; width: 24px; height: 24px; background: var(--bg); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); z-index: 3; }
+.rx span { position: absolute; top: 4px; translate: 3px 0; }
+.ry span { position: absolute; left: 3px; writing-mode: vertical-rl; rotate: 180deg; translate: 0 -3px; }
+.band { position: absolute; background: rgb(102 155 188 / 0.28); transition: all 320ms var(--ease-out); }
+.rx .band { top: 0; bottom: 0; } .ry .band { left: 0; right: 0; }
+.g { position: absolute; background: rgb(102 155 188 / 0.32); transition: all 320ms var(--ease-out); }
+.g.v { top: 0; bottom: 0; width: 1px; } .g.h { left: 0; right: 0; height: 1px; }
+.dim { position: absolute; translate: -50% 0; padding: 2px 6px; border-radius: 5px; background: var(--secondary); color: var(--bg);
+  font: 500 10.5px/1.4 "Red Hat Mono", monospace; white-space: nowrap; transition: all 320ms var(--ease-out); z-index: 5; pointer-events: none; }
+@media (max-width: 720px) {
+  .ry, .corner { display: none; } .rx { left: 0; }
+  .canvas { padding-left: clamp(16px, 5vw, 72px); }
+}

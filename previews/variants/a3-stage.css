@@ -1,0 +1,13 @@
+/* A3 · Stage: the scenes stand on a keynote floor, lit from above, reflected below. */
+.backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.light { position: absolute; inset: 0;
+  background: radial-gradient(ellipse 46% 62% at 66% -6%, rgb(102 155 188 / 0.11), transparent 70%); }
+.floor { position: absolute; left: 0; right: 0; bottom: 0; top: var(--floor, 72%);
+  background: linear-gradient(180deg, #06121b, var(--bg) 70%); border-top: 1px solid rgb(253 240 213 / 0.07); }
+.board { -webkit-box-reflect: below 2px linear-gradient(transparent 74%, rgb(255 255 255 / 0.16)); }
+.canvas { padding-bottom: 200px; }
+.scene-label { color: var(--text-muted); }
+@media (max-width: 720px) {
+  .light { background: radial-gradient(ellipse 90% 40% at 50% 0%, rgb(102 155 188 / 0.1), transparent 70%); }
+  .canvas { padding-bottom: 150px; }
+}
