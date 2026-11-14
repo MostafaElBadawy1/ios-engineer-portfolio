@@ -1,0 +1,142 @@
+---
+import AppButton from "../../../components/ui/AppButton.astro";
+import AppLink from "../../../components/ui/AppLink.astro";
+import AppIconGlyph from "../../../components/ui/AppIconGlyph.astro";
+import { profile } from "../../../content/profile";
+import { formatLocalTime } from "../utils/local-time";
+
+/** First screen: only the introduction. Name is the focal point; work waits below. */
+const [first, last] = profile.name.split(" ");
+const builtAt = formatLocalTime(new Date(), "Africa/Cairo");
+---
+
+<section id="top" class="hero" aria-labelledby="hero-name" data-hero>
+  <h1 id="hero-name" class="hero__name font-display text-display font-bold tracking-display" data-hero-name data-intro>
+    <span class="block" data-hero-line>
+      {first}
+    </span>
+    <span class="block hero__last" data-hero-line>
+      {last}
+    </span>
+  </h1>
+
+  <div class="hero__meta" data-hero-meta>
+    <div class="flex flex-col gap-6" data-intro>
+      <p class="font-display text-2xl font-medium leading-tight">
+        {profile.title}
+        <span class="text-text-muted">, based in {profile.location}</span>
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <AppButton href="#contact" variant="primary" icon="mail">
+          Get in touch
+        </AppButton>
+        <AppButton href={profile.links.cv.href} variant="secondary" icon="file" download>
+          Download CV
+        </AppButton>
+      </div>
+    </div>
+    <div class="flex flex-col gap-5" data-intro>
+      <p class="max-w-measure text-text-secondary">{profile.bio}</p>
+      <div class="flex flex-wrap gap-x-6">
+        <AppLink href={profile.links.github.href} external>
+          <AppIconGlyph name="github" />
+          GitHub
+        </AppLink>
+        <AppLink href={profile.links.linkedin.href} external>
+          <AppIconGlyph name="linkedin" />
+          LinkedIn
+        </AppLink>
+        <p class="ml-auto flex min-h-11 items-center gap-2 font-mono text-sm text-text-muted">
+          Cairo <time data-cairo-time>{builtAt}</time>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <a href="#about" class="scroll-cue" data-scroll-cue data-intro>
+    <span class="scroll-cue__track" aria-hidden="true">
+      <span class="scroll-cue__dot"></span>
+    </span>
+    Scroll to explore
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    min-height: 100svh;
+    padding: 7rem clamp(1.25rem, 4vw, 3rem) 7.5rem;
+    gap: 3rem;
+  }
+  .hero__name {
+    align-self: center;
+    margin: 0;
+  }
+  .hero__last {
+    padding-left: 0.6em;
+  }
+  .hero__meta {
+    display: grid;
+    gap: 2.5rem;
+    align-items: end;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+  @media (min-width: 900px) {
+    .hero__meta {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 1.75rem;
+    translate: -50% 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  .scroll-cue__track {
+    position: relative;
+    width: 1px;
+    height: 2.25rem;
+    background: var(--color-line-strong);
+    overflow: hidden;
+  }
+  .scroll-cue__dot {
+    position: absolute;
+    left: -1px;
+    width: 3px;
+    height: 0.75rem;
+    border-radius: 2px;
+    background: var(--color-text);
+    animation: cue 2.2s var(--ease-ios) infinite;
+  }
+  @keyframes cue {
+    from {
+      transform: translateY(-0.75rem);
+    }
+    to {
+      transform: translateY(2.25rem);
+    }
+  }
+  @media (max-width: 640px) {
+    .hero {
+      padding-bottom: 6rem;
+    }
+    .hero__last {
+      padding-left: 0;
+    }
+  }
+</style>
+
+<script>
+  import { initHero } from "../utils/hero-motion";
+  initHero();
+</script>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../features/site/components/SiteHeader.astro";
+import HeroSection from "../features/hero/components/HeroSection.astro";
+import AboutSection from "../features/about/components/AboutSection.astro";
+import WorkSection from "../features/work/components/WorkSection.astro";
+import ContactSection from "../features/contact/components/ContactSection.astro";
+import { profile } from "../content/profile";
+---
+
+<BaseLayout
+  title={`${profile.name} · ${profile.title}`}
+  description="iOS engineer in Egypt building public-service apps for Egypt and Saudi Arabia. Native Swift, UIKit, and SwiftUI."
+>
+  <SiteHeader />
+  <main id="main">
+    <HeroSection />
+    <AboutSection />
+    <WorkSection />
+    <ContactSection />
+  </main>
+</BaseLayout>
+
+<script>
+  import { initSite } from "../features/site/utils/site-motion";
+  import { whenIdle } from "../lib/motion";
+  whenIdle(initSite);
+</script>

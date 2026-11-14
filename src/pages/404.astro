@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AppButton from "../components/ui/AppButton.astro";
+---
+
+<BaseLayout title="Page not found · Mostafa Elbadawy" description="This page doesn't exist.">
+  <main id="main" class="grid min-h-svh place-content-center gap-8 px-6 text-center">
+    <h1 class="font-display text-title font-bold tracking-display">This page doesn't exist.</h1>
+    <p class="text-text-secondary">The link may be old, or the address has a typo.</p>
+    <div>
+      <AppButton href="/" variant="primary">
+        Back to the portfolio
+      </AppButton>
+    </div>
+  </main>
+</BaseLayout>

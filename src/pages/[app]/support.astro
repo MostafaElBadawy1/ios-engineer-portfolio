@@ -1,0 +1,14 @@
+---
+import { getCollection } from "astro:content";
+import OwnAppPage from "../../features/site/components/OwnAppPage.astro";
+import { ownApps } from "../../features/work/utils/apps";
+import type { AppEntry } from "../../types/app";
+
+/** One page per own app (apps with `ownApp: true`). */
+export async function getStaticPaths(): Promise<{ params: { app: string }; props: { app: AppEntry } }[]> {
+  return ownApps(await getCollection("apps")).map((app) => ({ params: { app: app.id }, props: { app } }));
+}
+const { app } = Astro.props;
+---
+
+<OwnAppPage app={app} view="support" />

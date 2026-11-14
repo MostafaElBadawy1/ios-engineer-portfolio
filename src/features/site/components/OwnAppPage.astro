@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import AppIcon from "../../../components/ui/AppIcon.astro";
+import AppButton from "../../../components/ui/AppButton.astro";
+import AppLink from "../../../components/ui/AppLink.astro";
+import type { AppEntry } from "../../../types/app";
+import { profile } from "../../../content/profile";
+
+/** Shared shell for an own app's landing, privacy, and support pages (App Store requirements). */
+export interface OwnAppPageProps {
+  app: AppEntry;
+  view: "landing" | "privacy" | "support";
+}
+const { app, view } = Astro.props as OwnAppPageProps;
+const { data } = app;
+const titles = { landing: data.name, privacy: `${data.name} privacy policy`, support: `${data.name} support` };
+const support = data.supportEmail ?? profile.email;
+---
+
+<BaseLayout title={`${titles[view]} · ${profile.name}`} description={data.summary}>
+  <main id="main" class="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-6 py-24">
+    <AppIcon monogram={data.icon.monogram} tint={data.icon.tint} ink={data.icon.ink} size="xl" />
+    <h1 class="font-display text-title font-bold tracking-display">{titles[view]}</h1>
+    {view === "landing" && (
+      <>
+        <p class="text-2xl">{data.summary}</p>
+        {data.storeUrl && (
+          <div>
+            <AppButton href={data.storeUrl} variant="primary" external>
+              Get it on the App Store
+            </AppButton>
+          </div>
+        )}
+      </>
+    )}
+    {view === "privacy" && data.privacyPolicy.map((paragraph) => <p class="max-w-detail text-text-secondary">{paragraph}</p>)}
+    {view === "support" && (
+      <p class="text-text-secondary">
+        Questions or problems? Email{" "}
+        <AppLink href={`mailto:${support}`} tone="accent">
+          {support}
+        </AppLink>
+        .
+      </p>
+    )}
+    <nav aria-label={data.name} class="flex gap-6 border-t border-line pt-6">
+      <AppLink href={`/${app.id}`}>Overview</AppLink>
+      <AppLink href={`/${app.id}/privacy`}>Privacy</AppLink>
+      <AppLink href={`/${app.id}/support`}>Support</AppLink>
+      <AppLink href="/">Portfolio</AppLink>
+    </nav>
+  </main>
+</BaseLayout>
