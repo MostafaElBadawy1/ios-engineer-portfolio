@@ -13,6 +13,7 @@ Astro + TypeScript (strict) + Tailwind v4, static build deployed to Cloudflare W
 ## Users
 
 Two audiences, weighted equally (confirmed):
+
 - Hiring managers and recruiters evaluating an iOS engineer for a role, often remote/international. Job: decide in under a minute whether he ships real, at-scale native iOS work, then grab the CV or email.
 - Prospective freelance clients who need an iOS app built. Job: see shipped apps that resemble their need, then make contact.
 
