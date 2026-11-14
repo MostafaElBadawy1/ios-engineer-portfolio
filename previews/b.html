@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>B · Lock Screen — Mostafa Elbadawy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  body { font: 400 17px/1.65 "Mona Sans", sans-serif; font-variation-settings: "wdth" 100; letter-spacing: 0.008em; }
+  ::selection { background: var(--secondary); color: var(--bg); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 14px;
+    background: var(--accent); color: var(--text); font-weight: 600; text-decoration: none; border: 0; cursor: pointer; }
+  .btn:hover { background: var(--accent-deep); }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--secondary); background: transparent; }
+
+  /* ---------- Lock screen ---------- */
+  .lock { position: relative; height: max(100svh, 640px); overflow: hidden; isolation: isolate; }
+  .wall { position: absolute; top: 0; left: 50%; height: 100%; aspect-ratio: 713 / 1200; translate: -50% 0;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+            mask: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); }
+  .wall img { position: absolute; inset: 0; width: 100%; height: 100%; filter: saturate(0.8) brightness(0.78); }
+  .wall { z-index: 0; }
+  .wall.cut { z-index: 2; }
+  .scrim { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: linear-gradient(to top, var(--bg) 0%, rgb(3 10 16 / 0.9) 26%, rgb(3 10 16 / 0) 58%); }
+  .clock { position: absolute; z-index: 1; left: 0; right: 0; top: 8.5%; margin: 0; text-align: center; line-height: 0.8;
+    font-size: clamp(84px, min(19vw, 27svh), 290px); font-weight: 800; font-variation-settings: "wdth" 118;
+    letter-spacing: -0.02em; color: var(--text); }
+  .dateline { position: absolute; z-index: 4; left: 0; right: 0; top: calc(8.5% - 40px); margin: 0; text-align: center;
+    font-size: 17px; font-weight: 600; line-height: 1.2; letter-spacing: 0.01em; }
+  .dateline span { color: var(--text-muted); font-weight: 500; }
+
+  .notes { position: absolute; z-index: 4; left: clamp(16px, 5vw, 72px); bottom: 64px; width: min(380px, calc(100% - 32px));
+    display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .note { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; width: 100%; padding: 12px 14px; text-align: left;
+    border-radius: 22px; border: 1px solid var(--line); background: rgb(7 23 34 / 0.94); cursor: pointer; color: var(--text); }
+  .note:hover { border-color: var(--line-steel); }
+  .note .icon { grid-row: span 3; align-self: center; }
+  .note .top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--text-muted); line-height: 1.3; }
+  .note strong { font-size: 15px; font-weight: 650; line-height: 1.3; }
+  .note .body { font-size: 14px; line-height: 1.4; color: var(--text-body-2); }
+  .stack-note { position: relative; margin-bottom: 10px; }
+  .stack-note::before, .stack-note::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -6px; height: 20px; z-index: -1;
+    border-radius: 0 0 20px 20px; background: #06131c; border: 1px solid var(--line); }
+  .stack-note::after { left: 20px; right: 20px; bottom: -11px; z-index: -2; background: #050f17; }
+  .stack-note .note { justify-content: start; }
+  .faces { display: flex; grid-row: span 2; align-self: center; }
+  .faces .icon { box-shadow: 0 0 0 2px #071722; }
+  .faces .icon + .icon { margin-left: -6px; }
+  a.note { text-decoration: none; }
+
+  .widget { position: absolute; z-index: 4; right: clamp(16px, 5vw, 72px); bottom: 64px; width: min(360px, 30vw); }
+  .widget p { margin: 0 0 20px; color: var(--text); font-size: 17px; line-height: 1.6; }
+  .widget .row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .indicator { position: absolute; z-index: 4; left: 50%; bottom: 18px; translate: -50% 0; display: grid; justify-items: center; gap: 8px;
+    color: var(--text-muted); font-size: 13px; text-decoration: none; }
+  .indicator::after { content: ""; width: 136px; height: 5px; border-radius: 3px; background: var(--text); opacity: 0.85; }
+
+  /* ---------- Home screen ---------- */
+  .home { padding: clamp(64px, 9vw, 120px) clamp(16px, 5vw, 72px) 56px; max-width: 1180px; margin: 0 auto; }
+  .home h2 { font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1; font-weight: 750; font-variation-settings: "wdth" 112;
+    letter-spacing: -0.02em; margin: 0 0 12px; }
+  .home .lede { margin: 0 0 56px; color: var(--text-body-2); max-width: 54ch; }
+  .home .bio-m { display: none; }
+  .apps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 40px 16px; margin: 0 0 72px; padding: 0; list-style: none; }
+  .apps .icon-button { width: 100%; }
+  .apps .lbl { font-size: 14px; font-weight: 500; }
+  .dock { display: flex; justify-content: center; gap: 28px; width: fit-content; margin: 0 auto; padding: 14px 24px;
+    border-radius: 34px; background: var(--surface); border: 1px solid var(--line); }
+  .dock a { display: grid; justify-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 12px; }
+  .dock a:hover { color: var(--text); }
+  .dock .icon { --size: 58px; --tint: var(--surface-2); }
+  .dock svg { width: 26px; height: 26px; stroke: var(--text); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .note-ph { margin: 40px 0 0; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+  /* ---------- App (launched) ---------- */
+  .appview { position: fixed; inset: 0; z-index: 30; overflow-y: auto; background: var(--bg); visibility: hidden; opacity: 0;
+    scale: 0.96; transition: opacity 220ms var(--ease-out), scale 320ms var(--ease-out), visibility 0s 320ms; }
+  .appview.open { visibility: visible; opacity: 1; scale: 1; transition-delay: 0s; }
+  .appview .inner { max-width: 680px; margin: 0 auto; padding: 20px clamp(20px, 5vw, 40px) 64px; }
+  .done { min-height: 44px; padding: 0; border: 0; background: none; color: var(--secondary); font-weight: 600; font-size: 17px; cursor: pointer; }
+  .a-head { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; margin: 28px 0 24px; }
+  .a-head h2 { margin: 0; font-size: clamp(34px, 6vw, 52px); line-height: 1; font-weight: 800; font-variation-settings: "wdth" 115; letter-spacing: -0.025em; }
+  .a-head p { margin: 8px 0 0; color: var(--text-muted); font-size: 15px; }
+  .appview .line { font-size: 21px; line-height: 1.5; margin: 0 0 28px; max-width: 34ch; }
+  .appview .status { color: var(--text-muted); margin: 0; }
+  .facts { display: flex; gap: 0; margin: 36px 0; padding: 0; border-block: 1px solid var(--line); }
+  .facts div { flex: 1; display: flex; flex-direction: column-reverse; padding: 16px 0; }
+  .facts div + div { padding-left: 20px; border-left: 1px solid var(--line); }
+  .facts dd { margin: 0; font-size: 26px; font-weight: 750; font-variation-settings: "wdth" 110; font-variant-numeric: tabular-nums; }
+  .facts dt { font-size: 13px; color: var(--text-muted); }
+  .appview h3 { font-size: 15px; font-weight: 650; color: var(--text-muted); margin: 0 0 10px; }
+  .work { margin: 0 0 32px; padding-left: 20px; color: var(--text-body-2); }
+  .stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .stack li { padding: 6px 12px; border-radius: 10px; border: 1px solid var(--line-steel); color: var(--secondary); font-size: 14px; font-weight: 500; }
+  .stack li.none { color: var(--text-muted); border-style: dashed; }
+
+  @media (max-width: 900px) {
+    .widget { display: none; }
+    .home .bio-m { display: block; margin: 0 0 24px; }
+    .home .bio-m .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .notes { left: 50%; translate: -50% 0; bottom: 62px; }
+    .apps { grid-template-columns: repeat(4, 1fr); gap: 28px 8px; }
+  }
+  @media (max-width: 480px) {
+    .apps .icon { --size: 60px !important; }
+    .apps .lbl { font-size: 12px; }
+    .dock { gap: 14px; padding: 12px 14px; }
+    .dock .icon { --size: 52px; }
+    .note .body { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="lock" aria-labelledby="name">
+    <h1 id="name" class="dateline">Mostafa Elbadawy <span>· iOS Engineer, Egypt</span></h1>
+    <div class="wall" aria-hidden="true"><img src="assets/portrait-bg.jpg" alt="" width="713" height="1200" fetchpriority="high"></div>
+    <p class="clock" aria-hidden="true">Mostafa</p>
+    <div class="wall cut" aria-hidden="true"><img src="assets/portrait-cutout.png" alt="" width="713" height="1200"></div>
+    <div class="scrim"></div>
+
+    <ul class="notes" id="notes" aria-label="Shipped apps, highlights"></ul>
+
+    <div class="widget">
+      <p>iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.</p>
+      <div class="row"><a class="btn" href="mailto:hi@mostafaelbadawy.com">Email me</a><a class="btn ghost" href="#cv">Download CV</a></div>
+    </div>
+    <a class="indicator" href="#home">All apps</a>
+  </section>
+
+  <section class="home" id="home" aria-labelledby="apps-h">
+    <div class="bio-m">
+      <p>iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.</p>
+      <div class="row"><a class="btn" href="mailto:hi@mostafaelbadawy.com">Email me</a><a class="btn ghost" href="#cv">Download CV</a></div>
+    </div>
+    <h2 id="apps-h">Apps I've shipped</h2>
+    <p class="lede">Public services in Egypt and Saudi Arabia, plus freelance work in commerce and health. Open any app.</p>
+    <ul class="apps" id="apps"></ul>
+    <nav class="dock" aria-label="Contact">
+      <a href="mailto:hi@mostafaelbadawy.com"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>Mail</a>
+      <a href="https://github.com/MostafaElBadawy1" rel="noopener"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>GitHub</a>
+      <a href="https://linkedin.com/in/mostafa-elbadawy" rel="noopener"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 10v8M6 6.5v.01M10.5 18v-8M10.5 13.5c0-2 1.3-3.5 3.2-3.5S17 11.3 17 13.5V18"/></svg></span>LinkedIn</a>
+      <a href="#cv"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5"/></svg></span>CV</a>
+    </nav>
+    <p class="note-ph">App icons are placeholders (PH) until the real artwork is supplied.</p>
+  </section>
+</main>
+
+<div class="appview" id="appview" role="dialog" aria-modal="true" aria-labelledby="app-name">
+  <div class="inner">
+    <button class="done" type="button" id="done">Done</button>
+    <header class="a-head"><span data-f="icon"></span><div><h2 id="app-name" data-f="name"></h2><p data-f="meta"></p></div></header>
+    <p class="line" data-f="line"></p>
+    <div data-f="cta"></div>
+    <dl class="facts" data-f="facts"></dl>
+    <h3>What I worked on</h3>
+    <ul class="work" data-f="work"></ul>
+    <h3>Stack</h3>
+    <ul class="stack" data-f="stack"></ul>
+  </div>
+</div>
+
+<p class="preview-flag">Direction B · Lock Screen</p>
+
+<script src="shared/apps.js"></script>
+<script>
+  const by = (id) => APPS.find((a) => a.id === id);
+  const view = document.getElementById("appview");
+  let opener = null;
+
+  const note = (a, title, from) => `<li><button class="note" type="button" data-id="${a.id}">
+      ${iconHTML(a, 40)}<span class="top"><span>${a.name}</span><span>${from}</span></span>
+      <strong>${title}</strong><span class="body">${a.line}</span></button></li>`;
+  const rest = APPS.filter((a) => !["visitors", "eehc"].includes(a.id));
+  document.getElementById("notes").innerHTML =
+    note(by("visitors"), "200k+ downloads in 7 languages", "Fixed Solutions") +
+    note(by("eehc"), "100k+ downloads across 3 apps", "Fixed Solutions") +
+    `<li class="stack-note"><a class="note" href="#home">
+      <span class="faces" aria-hidden="true">${rest.map((a) => iconHTML(a, 30)).join("")}</span>
+      <span class="top"><span>4 more apps</span><span></span></span><strong>Act Plus, Alharamain, Bzaaarz, Medjol</strong></a></li>`;
+
+  document.getElementById("apps").innerHTML = APPS.map((a) => `<li>
+    <button class="icon-button" type="button" data-id="${a.id}">${iconHTML(a, 84)}<span class="lbl">${a.name}</span></button></li>`).join("");
+
+  function open(id, btn) {
+    opener = btn; fillDetail(view, by(id), 96);
+    view.classList.add("open"); document.body.style.overflow = "hidden";
+    view.scrollTop = 0; document.getElementById("done").focus();
+  }
+  function close() { view.classList.remove("open"); document.body.style.overflow = ""; opener?.focus(); }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-id]"); if (b) open(b.dataset.id, b);
+  });
+  document.getElementById("done").addEventListener("click", close);
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && view.classList.contains("open")) close(); });
+</script>
+</body>
+</html>

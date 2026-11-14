@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C · App Library — Mostafa Elbadawy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  body { font: 400 17px/1.65 "Onest", sans-serif; letter-spacing: 0.01em; }
+  ::selection { background: var(--secondary); color: var(--bg); }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 14px;
+    background: var(--accent); color: var(--text); font-weight: 600; text-decoration: none; }
+  .btn:hover { background: var(--accent-deep); }
+
+  .top { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .top .site { font-size: 15px; font-weight: 500; color: var(--text-muted); text-decoration: none; }
+  .avatar { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 500; min-height: 44px; }
+  .avatar img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; }
+
+  .title { padding: clamp(24px, 5vw, 56px) 0 32px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 64px; align-items: end; }
+  h1 { margin: 0; font-size: clamp(44px, 7.2vw, 96px); line-height: 0.96; font-weight: 800; letter-spacing: -0.035em; text-wrap: balance; }
+  .sub { margin: 14px 0 0; font-size: clamp(19px, 2vw, 23px); font-weight: 500; color: var(--text-muted); }
+  .bio { margin: 0; max-width: 38ch; color: var(--text-body-2); }
+
+  /* Filter: a real control, not decoration */
+  .filter { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 28px; padding: 0; border: 0; }
+  .filter legend { float: left; margin-right: 8px; font-size: 15px; color: var(--text-muted); }
+  .chip { min-height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid var(--line); background: none; color: var(--text);
+    font-size: 15px; font-weight: 500; cursor: pointer; }
+  .chip:hover { border-color: var(--line-steel); }
+  .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .count { margin-left: 8px; font-size: 14px; color: var(--text-muted); }
+
+  /* App Library */
+  .library { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 20px; margin: 0; padding: 0 0 72px; list-style: none; }
+  .folder { display: grid; gap: 12px; justify-items: center; }
+  .tile { width: 100%; aspect-ratio: 1; border-radius: 32px; background: var(--surface); border: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; align-content: center; gap: 12px; padding: 22px; }
+  .tile .icon-button { width: 100%; gap: 10px; }
+  .tile .icon { --size: clamp(64px, 7.4vw, 100px) !important; transition: opacity 240ms var(--ease-out), filter 240ms var(--ease-out), transform 160ms var(--ease-out); }
+  .tile .lbl { font-size: 14px; font-weight: 500; line-height: 1.25; text-align: center; }
+  .icon-button.dim .icon { opacity: 0.22; filter: grayscale(1); }
+  .icon-button.dim .lbl { color: var(--text-muted); }
+  .fname { font-size: 15px; font-weight: 600; text-align: center; }
+  .fname span { display: block; font-size: 13px; font-weight: 400; color: var(--text-muted); }
+
+  /* Contact Poster: the photo's job is contact */
+  .poster { position: relative; overflow: hidden; padding: 0; display: block; }
+  .poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: saturate(0.85) brightness(0.85); }
+  .poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(3 10 16 / 0.88), transparent 42%); }
+  .poster .pname { position: absolute; z-index: 1; top: 14px; left: 0; right: 0; text-align: center; margin: 0;
+    font-size: clamp(30px, 3.4vw, 44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .actions { position: absolute; z-index: 1; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .actions a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: rgb(7 23 34 / 0.92); border: 1px solid var(--line); }
+  .actions a.primary { background: var(--accent); border-color: var(--accent); }
+  .actions svg { width: 20px; height: 20px; stroke: var(--text); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .ph { color: var(--text-muted); font-size: 13px; padding-bottom: 40px; margin: 0; }
+
+  /* Sheet */
+  .scrim { position: fixed; inset: 0; z-index: 30; background: rgb(3 10 16 / 0.72); opacity: 0; visibility: hidden; transition: opacity 260ms, visibility 0s 300ms; }
+  .sheet { position: fixed; z-index: 31; left: 50%; bottom: 0; width: min(720px, 100%); max-height: calc(100svh - 40px); overflow-y: auto;
+    translate: -50% 100%; visibility: hidden; transition: translate 380ms var(--ease-out), visibility 0s 380ms;
+    background: var(--surface); border: 1px solid var(--line); border-bottom: 0; border-radius: 28px 28px 0 0; padding: 10px clamp(20px, 4vw, 36px) 48px; }
+  .open .scrim { opacity: 1; visibility: visible; transition-delay: 0s; }
+  .open .sheet { translate: -50% 0; visibility: visible; transition-delay: 0s; }
+  .grabber { width: 40px; height: 5px; border-radius: 3px; background: rgb(253 240 213 / 0.2); margin: 0 auto 6px; }
+  .close { float: right; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--surface-2); cursor: pointer; display: grid; place-items: center; }
+  .close svg { width: 16px; height: 16px; stroke: var(--text-muted); stroke-width: 2.2; stroke-linecap: round; }
+  .s-head { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; margin: 22px 0 18px; }
+  .s-head h2 { margin: 0; font-size: 30px; line-height: 1.1; font-weight: 800; letter-spacing: -0.025em; }
+  .s-head p { margin: 4px 0 0; color: var(--text-muted); font-size: 15px; }
+  .sheet .line { margin: 0 0 20px; font-size: 18px; line-height: 1.55; }
+  .sheet .status { margin: 0; color: var(--text-muted); }
+  .facts { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 26px 0; padding: 14px 0; border-block: 1px solid var(--line); }
+  .facts div { display: flex; flex-direction: column-reverse; align-items: center; text-align: center; }
+  .facts div + div { border-left: 1px solid var(--line); }
+  .facts dd { margin: 0; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.3; }
+  .facts dt { font-size: 13px; color: var(--text-muted); }
+  .sheet h3 { font-size: 15px; font-weight: 600; color: var(--text-muted); margin: 0 0 8px; }
+  .work { margin: 0 0 26px; padding-left: 20px; color: var(--text-body-2); }
+  .stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+  .stack li { padding: 6px 12px; border-radius: 10px; border: 1px solid var(--line-steel); color: var(--secondary); font-size: 14px; font-weight: 500; }
+  .stack li.none { color: var(--text-muted); border-style: dashed; }
+  .dev { display: flex; align-items: center; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
+  .dev img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; }
+  .dev span { color: var(--text-muted); }
+
+  @media (max-width: 960px) {
+    main { display: flex; flex-direction: column; }
+    .title { display: contents; }
+    .title > div { padding: 24px 0 28px; }
+    .filter { order: 1; }
+    .library { order: 2; padding-bottom: 32px; }
+    .bio { order: 3; padding-bottom: 32px; }
+    .ph { order: 4; }
+    .library { grid-template-columns: repeat(2, 1fr); gap: 24px 14px; }
+    .tile .icon { --size: clamp(52px, 15vw, 96px) !important; }
+  }
+  @media (max-width: 480px) {
+    .tile { padding: 14px; gap: 8px; border-radius: 26px; }
+    .tile .lbl { font-size: 12px; }
+    .filter { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 2px 16px 6px; scrollbar-width: none; }
+    .filter legend { display: none; }
+    .chip { flex: none; }
+    .actions { gap: 6px; bottom: 10px; }
+    .actions a { width: 38px; height: 38px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="site" href="#">mostafaelbadawy.com</a>
+    <a class="avatar" href="#contact"><img src="assets/portrait-bg.jpg" alt="" width="36" height="36">Contact</a>
+  </header>
+
+  <main>
+    <section class="title" aria-labelledby="name">
+      <div>
+        <h1 id="name">Mostafa Elbadawy</h1>
+        <p class="sub">iOS Engineer in Egypt</p>
+      </div>
+      <p class="bio">iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.</p>
+    </section>
+
+    <fieldset class="filter" id="filter">
+      <legend>Built with</legend>
+    </fieldset>
+
+    <ul class="library" id="library" aria-label="Apps by group"></ul>
+    <p class="ph">App icons are placeholders (PH) until the real artwork is supplied. Act Plus and Alharamain have no confirmed stack yet, so filters skip them.</p>
+  </main>
+</div>
+
+<div id="layer">
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="app-name">
+    <div class="grabber" aria-hidden="true"></div>
+    <button class="close" type="button" id="close" aria-label="Close"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
+    <header class="s-head"><span data-f="icon"></span><div><h2 id="app-name" data-f="name"></h2><p data-f="alt"></p></div></header>
+    <p class="line" data-f="line"></p>
+    <div data-f="cta"></div>
+    <dl class="facts" data-f="facts"></dl>
+    <h3>What I worked on</h3>
+    <ul class="work" data-f="work"></ul>
+    <h3>Stack</h3>
+    <ul class="stack" data-f="stack"></ul>
+    <div class="dev"><img src="assets/portrait-bg.jpg" alt="" width="40" height="40"><div>Mostafa Elbadawy<br><span data-f="meta"></span></div></div>
+  </div>
+</div>
+
+<p class="preview-flag">Direction C · App Library</p>
+
+<script src="shared/apps.js"></script>
+<script>
+  const by = (id) => APPS.find((a) => a.id === id);
+  const groups = [
+    ["Public services", "Egypt", ["eehc", "actplus"]],
+    ["Visitors", "Saudi Arabia", ["visitors", "alharamain"]],
+    ["Freelance", "Commerce and health", ["bzaaarz", "medjol"]],
+  ];
+  const lib = document.getElementById("library");
+  lib.innerHTML = groups.map(([n, s, ids]) => `<li class="folder">
+      <div class="tile">${ids.map((id) => `<button class="icon-button" type="button" data-id="${id}">${iconHTML(by(id), 96)}<span class="lbl">${by(id).name}</span></button>`).join("")}</div>
+      <p class="fname">${n}<span>${s}</span></p></li>`).join("") +
+    `<li class="folder" id="contact"><div class="tile poster">
+       <img src="assets/portrait-bg.jpg" alt="Mostafa Elbadawy" width="713" height="1200" loading="lazy">
+       <p class="pname">Mostafa</p>
+       <ul class="actions">
+         <li><a class="primary" href="mailto:hi@mostafaelbadawy.com" aria-label="Email"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></a></li>
+         <li><a href="https://linkedin.com/in/mostafa-elbadawy" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M6 10v8M6 6.5v.01M10.5 18v-8M10.5 13.5c0-2 1.3-3.5 3.2-3.5S17 11.3 17 13.5V18"/></svg></a></li>
+         <li><a href="https://github.com/MostafaElBadawy1" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></a></li>
+         <li><a href="#cv" aria-label="Download CV"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5"/></svg></a></li>
+       </ul></div><p class="fname">Contact<span>Email, LinkedIn, GitHub, CV</span></p></li>`;
+
+  // Filter by technology: dims apps that don't use it and says how many match.
+  const techs = ["All", "SwiftUI", "UIKit", "MVVM", "Combine", "RxSwift"];
+  const filter = document.getElementById("filter");
+  filter.insertAdjacentHTML("beforeend", techs.map((t, i) => `<button class="chip" type="button" aria-pressed="${i === 0}">${t}</button>`).join("") +
+    `<span class="count" aria-live="polite" id="count"></span>`);
+  filter.addEventListener("click", (e) => {
+    const c = e.target.closest(".chip"); if (!c) return;
+    filter.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", String(x === c)));
+    const t = c.textContent; let n = 0;
+    lib.querySelectorAll("button[data-id]").forEach((b) => {
+      const hit = t === "All" || by(b.dataset.id).stack.includes(t); n += hit;
+      b.classList.toggle("dim", !hit);
+    });
+    document.getElementById("count").textContent = t === "All" ? "" : `${n} ${n === 1 ? "app" : "apps"}`;
+  });
+
+  const layer = document.getElementById("layer");
+  let opener = null;
+  function open(id, b) { opener = b; fillDetail(layer, by(id), 88); layer.classList.add("open"); document.body.style.overflow = "hidden";
+    document.getElementById("sheet").scrollTop = 0; document.getElementById("close").focus(); }
+  function close() { layer.classList.remove("open"); document.body.style.overflow = ""; opener?.focus(); }
+  lib.addEventListener("click", (e) => { const b = e.target.closest("button[data-id]"); if (b) open(b.dataset.id, b); });
+  document.getElementById("close").addEventListener("click", close);
+  document.getElementById("scrim").addEventListener("click", close);
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && layer.classList.contains("open")) close(); });
+</script>
+</body>
+</html>

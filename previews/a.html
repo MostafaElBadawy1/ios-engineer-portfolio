@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A · Storyboard — Mostafa Elbadawy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Red+Hat+Text:wght@400;500;600&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  body { font: 400 17px/1.65 "Red Hat Text", sans-serif; letter-spacing: 0.006em; }
+  ::selection { background: var(--secondary); color: var(--bg); }
+  .mono { font-family: "Red Hat Mono", monospace; font-size: 12px; letter-spacing: 0.01em; color: var(--text-muted); }
+
+  /* Toolbar */
+  .bar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 24px;
+    height: 60px; padding: 0 clamp(16px, 4vw, 48px); background: var(--bg); border-bottom: 1px solid var(--line); }
+  .bar .wordmark { font: 600 16px/1 "Red Hat Display"; color: var(--text); text-decoration: none; margin-right: auto; }
+  .bar nav { display: flex; gap: 28px; }
+  .bar nav a { position: relative; color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 15px; padding: 18px 0; }
+  .bar nav a:hover { color: var(--text); }
+  .bar nav a[aria-current] { color: var(--text); }
+  .bar nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px;
+    border-radius: 12px; background: var(--accent); color: var(--text); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .btn:hover { background: var(--accent-deep); }
+
+  /* Canvas: an Interface Builder document, so the dot grid is the real surface */
+  .canvas { position: relative; min-height: calc(100svh - 60px); padding: clamp(32px, 6vw, 88px) clamp(16px, 5vw, 72px) 72px;
+    background-image: radial-gradient(rgb(102 155 188 / 0.16) 1px, transparent 1.2px); background-size: 24px 24px;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; align-items: start; column-gap: 0; }
+  .intro { max-width: 30rem; padding-right: 48px; padding-top: 24px; }
+  h1 { font: 700 clamp(44px, 5.4vw, 78px)/0.98 "Red Hat Display"; letter-spacing: -0.03em; margin: 0 0 20px; text-wrap: balance; }
+  .role { font: 500 20px/1.3 "Red Hat Display"; color: var(--text); margin: 0 0 20px; }
+  .role span { color: var(--text-muted); }
+  .bio { color: var(--text-body-2); margin: 0 0 28px; max-width: 34ch; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 0; margin: 0; list-style: none; }
+  .links a { color: var(--text); font-weight: 500; text-decoration-color: var(--line-steel); text-decoration-thickness: 1px; }
+  .links a:hover { text-decoration-color: var(--secondary); }
+
+  /* Scenes */
+  .scene { position: relative; display: grid; gap: 10px; }
+  .scene-label { display: flex; justify-content: space-between; gap: 12px; }
+  .board { position: relative; width: 300px; height: 620px; border-radius: 46px; background: var(--bg);
+    border: 1px solid var(--line-steel); box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.8); overflow: hidden; }
+  .entry { position: absolute; left: -68px; top: 330px; width: 56px; height: 2px; background: var(--text-muted); }
+  .entry::after { content: ""; position: absolute; right: -2px; top: -5px; border: 6px solid transparent; border-left: 9px solid var(--text-muted); border-right: 0; }
+  .status { display: flex; justify-content: space-between; padding: 18px 26px 0; font: 600 13px/1 "Red Hat Text"; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 8px; padding: 34px 18px 0; }
+  .grid .icon-button span.lbl { font-size: 11.5px; line-height: 1.2; color: var(--text); letter-spacing: 0.01em; }
+  .icon-button[aria-pressed="true"] .icon { outline: 2px solid var(--secondary); outline-offset: 3px; }
+  .dock { position: absolute; left: 12px; right: 12px; bottom: 14px; display: flex; justify-content: space-around;
+    padding: 12px 8px; border-radius: 30px; background: var(--surface); border: 1px solid var(--line); }
+  .dock a { display: grid; justify-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 10.5px; }
+  .dock .icon { --size: 48px; --tint: var(--surface-2); }
+  .dock svg { width: 22px; height: 22px; stroke: var(--text); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .segue { align-self: center; position: relative; width: 112px; height: 2px; margin-top: 30px;
+    background: repeating-linear-gradient(90deg, var(--secondary) 0 6px, transparent 6px 11px); }
+  .segue::after { content: ""; position: absolute; right: -2px; top: -5px; border: 6px solid transparent; border-left: 9px solid var(--secondary); border-right: 0; }
+  .segue i { position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; translate: -50% -50%; border-radius: 50%;
+    background: var(--bg); border: 1.5px solid var(--secondary); display: grid; place-items: center; }
+  .segue i::before { content: ""; width: 8px; height: 8px; border-top: 1.5px solid var(--secondary); border-right: 1.5px solid var(--secondary); rotate: 45deg; translate: -1px 0; }
+  .segue span { position: absolute; left: 0; right: 0; top: 18px; text-align: center; }
+
+  /* Detail scene content */
+  .detail { height: 100%; overflow-y: auto; padding: 16px 20px 28px; scrollbar-width: thin; scrollbar-color: var(--surface-2) transparent; }
+  .navbar { display: flex; align-items: center; height: 44px; margin-top: 14px; }
+  .back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 6px 0 0; border: 0; background: none;
+    color: var(--secondary); font-weight: 500; font-size: 15px; cursor: pointer; }
+  .back::before { content: ""; width: 9px; height: 9px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; rotate: 45deg; margin-left: 4px; }
+  .d-head { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; margin: 10px 0 16px; }
+  .d-head h2 { font: 700 22px/1.1 "Red Hat Display"; margin: 0; letter-spacing: -0.015em; }
+  .d-head p { text-wrap: balance; margin: 4px 0 0; font-size: 13px; line-height: 1.35; color: var(--text-muted); }
+  .detail .line { font-size: 14.5px; line-height: 1.55; margin: 0 0 16px; color: var(--text); }
+  .detail .btn { width: 100%; font-size: 14px; min-height: 44px; }
+  .detail .status { display: block; padding: 0; font: 400 13px/1.45 "Red Hat Text"; color: var(--text-muted); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin: 18px 0; padding: 12px 0; border-block: 1px solid var(--line); }
+  .facts div { text-align: center; }
+  .facts div + div { border-left: 1px solid var(--line); }
+  .facts dt { font-size: 11px; color: var(--text-muted); order: 2; }
+  .facts dd { margin: 0; font: 700 16px/1.3 "Red Hat Display"; font-variant-numeric: tabular-nums; }
+  .facts div { display: flex; flex-direction: column-reverse; }
+  .detail h3 { font: 600 13px/1.2 "Red Hat Display"; color: var(--text-muted); margin: 0 0 8px; letter-spacing: 0.01em; }
+  .work { margin: 0 0 18px; padding-left: 18px; font-size: 14px; line-height: 1.55; color: var(--text-body-2); }
+  .work li + li { margin-top: 6px; }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .stack li { padding: 4px 9px; border-radius: 8px; border: 1px solid var(--line-steel); color: var(--secondary); font: 500 12px/1.3 "Red Hat Mono"; }
+  .stack li.none { color: var(--text-muted); border-style: dashed; }
+  .swap { animation: swap 260ms var(--ease-out); }
+  @keyframes swap { from { opacity: 0; translate: 12px 0; } }
+
+  .footnote { grid-column: 1 / -1; margin-top: 40px; }
+
+  /* Tablet: intro above, two scenes side by side */
+  @media (max-width: 1180px) {
+    .canvas { grid-template-columns: auto auto auto; justify-content: center; }
+    .intro { grid-column: 1 / -1; max-width: 40rem; padding: 0 0 56px; }
+  }
+  /* Phone: one scene; the detail scene is pushed over it */
+  @media (max-width: 720px) {
+    .bar nav { display: none; }
+    .canvas { display: flex; flex-direction: column; padding-top: 28px; background-size: 20px 20px; }
+    .intro { display: contents; }
+    .role { margin-bottom: 28px; }
+    .scene.home { order: 1; margin-bottom: 36px; }
+    .bio, .links { order: 2; }
+    .footnote { order: 3; }
+    .scene.home { justify-items: center; }
+    .entry, .segue { display: none; }
+    .scene.home { width: 100%; }
+    .scene.home .scene-label { width: min(100%, 340px); }
+    .board { width: min(100%, 340px); height: 560px; }
+    .scene.app { position: fixed; inset: 0; z-index: 20; background: var(--bg); padding: 0; gap: 0;
+      translate: 100% 0; transition: translate 380ms var(--ease-out); visibility: hidden; }
+    .scene.app.open { translate: 0 0; visibility: visible; }
+    .scene.app .scene-label { display: none; }
+    .scene.app .board { width: 100%; height: 100svh; border: 0; border-radius: 0; box-shadow: none; }
+    .detail { padding: 8px 20px 40px; max-width: 34rem; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="wordmark" href="#">Mostafa Elbadawy</a>
+  <nav aria-label="Primary">
+    <a href="#work" aria-current="page">Work</a>
+    <a href="#about">About</a>
+    <a href="#cv">CV</a>
+  </nav>
+  <a class="btn" href="mailto:hi@mostafaelbadawy.com">Email me</a>
+</header>
+
+<main class="canvas" id="work">
+  <section class="intro" aria-labelledby="name">
+    <h1 id="name">Mostafa Elbadawy</h1>
+    <p class="role">iOS Engineer <span>· Egypt</span></p>
+    <p class="bio">iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.</p>
+    <ul class="links">
+      <li><a href="#cv">Download CV</a></li>
+      <li><a href="https://github.com/MostafaElBadawy1" rel="noopener">GitHub</a></li>
+      <li><a href="https://linkedin.com/in/mostafa-elbadawy" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </section>
+
+  <section class="scene home" aria-label="Shipped apps">
+    <div class="scene-label mono"><span>Home</span><span>6 apps</span></div>
+    <span class="entry" aria-hidden="true"></span>
+    <div class="board">
+      <div class="status" aria-hidden="true"><span>9:41</span><span>Cairo</span></div>
+      <div class="grid" id="grid"></div>
+      <nav class="dock" aria-label="Contact">
+        <a href="mailto:hi@mostafaelbadawy.com"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>Mail</a>
+        <a href="https://github.com/MostafaElBadawy1" rel="noopener"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>GitHub</a>
+        <a href="https://linkedin.com/in/mostafa-elbadawy" rel="noopener"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 10v8M6 6.5v.01M10.5 18v-8M10.5 13.5c0-2 1.3-3.5 3.2-3.5S17 11.3 17 13.5V18"/></svg></span>LinkedIn</a>
+        <a href="#cv"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5"/></svg></span>CV</a>
+      </nav>
+    </div>
+  </section>
+
+  <div class="segue" aria-hidden="true"><i></i><span class="mono">show</span></div>
+
+  <section class="scene app" id="app" aria-live="polite" aria-label="App detail">
+    <div class="scene-label mono"><span data-f="name">Visitors</span><span>Detail</span></div>
+    <div class="board">
+      <article class="detail" id="detail">
+        <div class="navbar"><button class="back" type="button" id="back">Apps</button></div>
+        <header class="d-head">
+          <span data-f="icon"></span>
+          <div><h2 data-f="name"></h2><p data-f="meta"></p></div>
+        </header>
+        <p class="line" data-f="line"></p>
+        <div data-f="cta"></div>
+        <dl class="facts" data-f="facts"></dl>
+        <h3>What I worked on</h3>
+        <ul class="work" data-f="work"></ul>
+        <h3>Stack</h3>
+        <ul class="stack" data-f="stack"></ul>
+      </article>
+    </div>
+  </section>
+
+  <p class="footnote mono">App icons are placeholders (PH) until the real artwork is supplied.</p>
+</main>
+
+<p class="preview-flag">Direction A · Storyboard</p>
+
+<script src="shared/apps.js"></script>
+<script>
+  const grid = document.getElementById("grid");
+  const scene = document.getElementById("app");
+  const detail = document.getElementById("detail");
+  const phone = matchMedia("(max-width: 720px)");
+  let opener = null;
+
+  grid.innerHTML = APPS.map((a) => `
+    <button class="icon-button" type="button" data-id="${a.id}" aria-pressed="false" aria-controls="app">
+      ${iconHTML(a, 62)}<span class="lbl">${a.name}</span>
+    </button>`).join("");
+
+  function show(id, fromUser) {
+    const app = APPS.find((a) => a.id === id);
+    fillDetail(scene, app, 64);
+    grid.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
+    detail.classList.remove("swap"); void detail.offsetWidth; detail.classList.add("swap");
+    detail.scrollTop = 0;
+    if (fromUser && phone.matches) { scene.classList.add("open"); document.getElementById("back").focus(); }
+  }
+  grid.addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    opener = b; show(b.dataset.id, true);
+  });
+  document.getElementById("back").addEventListener("click", () => { scene.classList.remove("open"); opener?.focus(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && scene.classList.contains("open")) { scene.classList.remove("open"); opener?.focus(); } });
+  show("visitors", false);
+</script>
+</body>
+</html>

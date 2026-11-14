@@ -1,0 +1,115 @@
+/* Shared preview foundation: palette tokens, squircle icon, focus, motion.
+   Each direction file layers its own type and layout on top. */
+:root {
+  --bg: #030a10;
+  --surface: #071722;
+  --surface-2: #0b2030;
+  --text: #fdf0d5;
+  --text-muted: #8fa5b3;      /* captions >= 14px medium, labels */
+  --text-body-2: #a4b6c1;     /* proposed: APCA Lc 60 secondary body text */
+  --accent: #c1121f;          /* fills only, never text */
+  --accent-text: #f0606a;
+  --accent-deep: #780000;     /* fills/borders only */
+  --secondary: #669bbc;
+  --line: rgb(253 240 213 / 0.09);
+  --line-steel: rgb(102 155 188 / 0.18);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --squircle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M100.00 50.00 L99.96 66.80 L99.83 72.14 L99.61 76.01 L99.31 79.12 L98.92 81.75 L98.44 84.05 L97.87 86.08 L97.20 87.89 L96.44 89.52 L95.58 91.00 L94.61 92.33 L93.53 93.53 L92.33 94.61 L91.00 95.58 L89.52 96.44 L87.89 97.20 L86.08 97.87 L84.05 98.44 L81.75 98.92 L79.12 99.31 L76.01 99.61 L72.14 99.83 L66.80 99.96 L50.00 100.00 L33.20 99.96 L27.86 99.83 L23.99 99.61 L20.88 99.31 L18.25 98.92 L15.95 98.44 L13.92 97.87 L12.11 97.20 L10.48 96.44 L9.00 95.58 L7.67 94.61 L6.47 93.53 L5.39 92.33 L4.42 91.00 L3.56 89.52 L2.80 87.89 L2.13 86.08 L1.56 84.05 L1.08 81.75 L0.69 79.12 L0.39 76.01 L0.17 72.14 L0.04 66.80 L0.00 50.00 L0.04 33.20 L0.17 27.86 L0.39 23.99 L0.69 20.88 L1.08 18.25 L1.56 15.95 L2.13 13.92 L2.80 12.11 L3.56 10.48 L4.42 9.00 L5.39 7.67 L6.47 6.47 L7.67 5.39 L9.00 4.42 L10.48 3.56 L12.11 2.80 L13.92 2.13 L15.95 1.56 L18.25 1.08 L20.88 0.69 L23.99 0.39 L27.86 0.17 L33.20 0.04 L50.00 0.00 L66.80 0.04 L72.14 0.17 L76.01 0.39 L79.12 0.69 L81.75 1.08 L84.05 1.56 L86.08 2.13 L87.89 2.80 L89.52 3.56 L91.00 4.42 L92.33 5.39 L93.53 6.47 L94.61 7.67 L95.58 9.00 L96.44 10.48 L97.20 12.11 L97.87 13.92 L98.44 15.95 L98.92 18.25 L99.31 20.88 L99.61 23.99 L99.83 27.86 L99.96 33.20Z'/%3E%3C/svg%3E");
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; }
+a { color: var(--accent-text); text-underline-offset: 0.2em; }
+button { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- App icon: true superellipse mask, not border-radius ---------- */
+.icon {
+  --size: 64px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  flex: none;
+  background: var(--tint, var(--surface-2));
+  color: var(--ink, var(--text));
+  -webkit-mask: var(--squircle) center / 100% 100% no-repeat;
+          mask: var(--squircle) center / 100% 100% no-repeat;
+  font-weight: 650;
+  font-size: calc(var(--size) * 0.34);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+/* Placeholder marker: dashed inner keyline + tiny "PH" so nobody mistakes it */
+.icon[data-placeholder]::before {
+  content: "";
+  position: absolute;
+  inset: 9%;
+  border: 1px dashed currentColor;
+  border-radius: 28%;
+  opacity: 0.35;
+}
+.icon[data-placeholder]::after {
+  content: "PH";
+  position: absolute;
+  bottom: 13%;
+  font-size: max(7px, calc(var(--size) * 0.11));
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+}
+
+.icon-button {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 18px;
+  -webkit-tap-highlight-color: transparent;
+}
+.icon-button:active .icon { transform: scale(0.94); }
+.icon-button .icon { transition: transform 160ms var(--ease-out); }
+
+.preview-flag {
+  position: fixed;
+  z-index: 50;
+  inset: auto 12px 12px auto;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+  font: 500 12px/1.3 ui-monospace, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
