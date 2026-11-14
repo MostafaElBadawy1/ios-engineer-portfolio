@@ -1,0 +1,29 @@
+---
+import type { SkillGroup } from "../../../types/profile";
+
+/** Skills grouped by area. Plain lists, no proficiency bars. */
+export interface SkillGroupsProps {
+  groups: readonly SkillGroup[];
+}
+const { groups } = Astro.props as SkillGroupsProps;
+---
+
+<div>
+  <h3 class="mb-8 font-display text-title font-bold tracking-display" data-reveal-title>
+    Skills
+  </h3>
+  <div class="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+    {groups.map((group) => (
+      <div data-skill-group>
+        <h4 class="mb-3 border-b border-line pb-3 font-mono text-sm text-text-muted">{group.name}</h4>
+        <ul class="flex list-none flex-wrap gap-x-4 gap-y-1 p-0">
+          {group.items.map((item) => (
+            <li class="font-display text-xl font-medium" data-skill>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>

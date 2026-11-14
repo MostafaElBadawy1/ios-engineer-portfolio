@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import PhoneMockup from "./PhoneMockup.astro";
+import ProjectChapter from "./ProjectChapter.astro";
+import WorkRail from "./WorkRail.astro";
+import { sortForWork } from "../utils/apps";
+
+/** Selected work: chapters scroll on the left while one phone stays and opens each app. */
+const apps = sortForWork(await getCollection("apps"));
+---
+
+<section id="work" class="work" aria-labelledby="work-title" data-work data-scene="work">
+  <header class="work__intro">
+    <h2 id="work-title" class="font-display text-title font-bold tracking-display" data-work-title>
+      Selected work
+    </h2>
+    <p class="max-w-measure text-xl text-text-secondary" data-work-lede>
+      {apps.length} shipped apps, from national public services in Egypt and Saudi Arabia to freelance products in commerce and
+      health. One at a time.
+    </p>
+  </header>
+
+  <div class="work__story">
+    <div class="work__chapters">
+      {apps.map((app) => (
+        <ProjectChapter app={app} />
+      ))}
+    </div>
+    <div class="work__stage">
+      <div class="work__sticky">
+        <div data-phone-stage>
+          <PhoneMockup apps={apps} mode="stage" />
+        </div>
+        <WorkRail apps={apps} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding: clamp(6rem, 12vw, 10rem) clamp(1.25rem, 4vw, 3rem) 4rem;
+    max-width: 90rem;
+    margin: 0 auto;
+  }
+  .work__intro {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .work__story {
+    display: grid;
+  }
+  .work__stage {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .work__story {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: clamp(3rem, 6vw, 7rem);
+    }
+    .work__stage {
+      display: block;
+    }
+    .work__sticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      --phone-w: clamp(17rem, 22vw, 20rem);
+    }
+    [data-phone-stage] {
+      perspective: 1200px;
+    }
+  }
+</style>
+
+<script>
+  import { initWork } from "../utils/work-motion";
+  import { whenIdle } from "../../../lib/motion";
+  whenIdle(initWork);
+</script>

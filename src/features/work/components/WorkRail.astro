@@ -1,0 +1,47 @@
+---
+import AppIcon from "../../../components/ui/AppIcon.astro";
+import type { AppEntry } from "../../../types/app";
+
+/** Progress through the apps; each mini icon jumps to its chapter. */
+export interface WorkRailProps {
+  apps: readonly AppEntry[];
+}
+const { apps } = Astro.props as WorkRailProps;
+---
+
+<nav class="rail" aria-label="Projects">
+  <ol class="list-none p-0">
+    {apps.map((app) => (
+      <li>
+        <a href={`#app-${app.id}`} class="rail__link" data-rail={app.id}>
+          <AppIcon monogram={app.data.icon.monogram} tint={app.data.icon.tint} ink={app.data.icon.ink} size="xs" />
+          <span class="sr-only">{app.data.name}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .rail ol {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .rail__link {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    opacity: 0.35;
+    transition:
+      opacity 300ms,
+      transform 500ms var(--ease-out-expo);
+  }
+  .rail__link:hover {
+    opacity: 0.8;
+  }
+  .rail__link[aria-current] {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+</style>

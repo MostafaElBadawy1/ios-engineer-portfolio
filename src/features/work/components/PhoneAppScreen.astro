@@ -1,0 +1,121 @@
+---
+import AppIcon from "../../../components/ui/AppIcon.astro";
+import type { AppEntry } from "../../../types/app";
+import { screenRows } from "../utils/apps";
+
+/** One app "opened" on the phone: tinted header with its icon, then an iOS grouped list of facts. */
+export interface PhoneAppScreenProps {
+  app: AppEntry;
+}
+const { app } = Astro.props as PhoneAppScreenProps;
+const { data } = app;
+const rows = screenRows(data);
+---
+
+<div class="screen" data-app-screen={app.id}>
+  <header class="screen__head">
+    <span class="screen__status">9:41</span>
+    <AppIcon monogram={data.icon.monogram} tint={data.icon.tint} ink={data.icon.ink} size="lg" />
+    <p class="screen__name">{data.name}</p>
+    {data.alternateName && <p class="screen__alt">{data.alternateName}</p>}
+  </header>
+  <dl class="screen__list">
+    {rows.map((row) => (
+      <div class="screen__row">
+        <dt>{row.label}</dt>
+        <dd>{row.value}</dd>
+      </div>
+    ))}
+  </dl>
+  <section class="screen__card">
+    <p class="screen__card-title">What I worked on</p>
+    <p class="screen__card-body">{data.contributions[0]}</p>
+  </section>
+</div>
+
+<style define:vars={{ tint: data.icon.tint, ink: data.icon.ink }}>
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    will-change: transform, opacity;
+  }
+  .screen__status {
+    position: absolute;
+    top: 0.95rem;
+    left: 1.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+  .screen__card {
+    margin: 0.75rem 0.75rem 0;
+    padding: 0.75rem 0.85rem;
+    border-radius: 0.9rem;
+    background: var(--color-surface);
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+  .screen__card-title {
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+  .screen__card-body {
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .screen__head {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 3.4rem 1rem 1.5rem;
+    background: var(--tint);
+    color: var(--ink);
+    text-align: center;
+  }
+  .screen__head :global(.app-icon) {
+    box-shadow: 0 0 0 1px rgb(3 10 16 / 0.18);
+    margin-bottom: 0.4rem;
+  }
+  .screen__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.1;
+  }
+  .screen__alt {
+    font-size: 0.75rem;
+    opacity: 0.75;
+  }
+  .screen__list {
+    margin: 1rem 0.75rem 0;
+    padding: 0 0.85rem;
+    border-radius: 0.9rem;
+    background: var(--color-surface);
+  }
+  .screen__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+  .screen__row + .screen__row {
+    border-top: 1px solid var(--color-line);
+  }
+  .screen__row dt {
+    color: var(--color-text-muted);
+    flex: none;
+  }
+  .screen__row dd {
+    margin: 0;
+    text-align: right;
+    font-weight: 500;
+  }
+</style>

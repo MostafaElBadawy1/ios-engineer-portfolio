@@ -1,0 +1,91 @@
+---
+import { Picture } from "astro:assets";
+import portrait from "../../../assets/portrait.jpg";
+import ExperienceList from "./ExperienceList.astro";
+import SkillGroups from "./SkillGroups.astro";
+import { profile } from "../../../content/profile";
+
+/** Second chapter: who he is, revealed as you read. */
+---
+
+<section id="about" class="about" aria-labelledby="about-title" data-about data-scene="about">
+  <h2 id="about-title" class="sr-only">
+    About
+  </h2>
+  <p class="font-display text-statement font-medium tracking-snug max-w-statement" data-statement>
+    {profile.statement}
+  </p>
+
+  <div class="about__grid">
+    <figure class="about__portrait" data-portrait>
+      <div class="about__frame">
+        <Picture
+          src={portrait}
+          alt="Mostafa Elbadawy, smiling, in a brown puffer jacket by the sea at night"
+          widths={[360, 540, 720, 960]}
+          sizes="(min-width: 1024px) 30vw, 90vw"
+          formats={["avif", "webp"]}
+          loading="lazy"
+          class="h-full w-full object-cover"
+          data-portrait-img
+        />
+      </div>
+      <figcaption class="mt-3 font-mono text-sm text-text-muted">Cairo, Egypt</figcaption>
+    </figure>
+
+    <div class="flex flex-col gap-20">
+      <ExperienceList items={profile.experience} education={profile.education} />
+      <SkillGroups groups={profile.skills} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(5rem, 12vw, 10rem);
+    padding: clamp(7rem, 16vw, 12rem) clamp(1.25rem, 4vw, 3rem);
+    max-width: 90rem;
+    margin: 0 auto;
+  }
+  .about__grid {
+    display: grid;
+    gap: 4rem;
+  }
+  @media (min-width: 1024px) {
+    .about__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 6rem;
+      align-items: start;
+    }
+    .about__portrait {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .about__portrait {
+    margin: 0;
+    max-width: 28rem;
+  }
+  @media (min-width: 1024px) {
+    .about__portrait {
+      max-width: none;
+    }
+  }
+  .about__frame {
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+  .about__portrait :global(img) {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-card);
+    object-position: 50% 22%;
+  }
+</style>
+
+<script>
+  import { initAbout } from "../utils/about-motion";
+  import { whenIdle } from "../../../lib/motion";
+  whenIdle(initAbout);
+</script>

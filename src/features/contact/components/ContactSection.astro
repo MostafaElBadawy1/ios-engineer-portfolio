@@ -1,0 +1,114 @@
+---
+import AppButton from "../../../components/ui/AppButton.astro";
+import AppLink from "../../../components/ui/AppLink.astro";
+import AppIconGlyph from "../../../components/ui/AppIconGlyph.astro";
+import { profile } from "../../../content/profile";
+
+/** The ending: one clear ask, the address big enough to tap, and a quiet sign-off. */
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="contact" aria-labelledby="contact-title" data-contact data-scene="contact">
+  <h2 id="contact-title" class="max-w-statement font-display text-title font-bold tracking-display" data-contact-title>
+    Have an app to build, or a team to join?
+  </h2>
+  <p class="max-w-measure text-xl text-text-secondary" data-contact-item>
+    I'm open to iOS roles and freelance projects. Email is the fastest way to reach me.
+  </p>
+  <a href={profile.links.email.href} class="contact__email" data-email>
+    {profile.email}
+  </a>
+  <div class="flex flex-wrap items-center gap-x-6 gap-y-3" data-contact-item>
+    <AppButton href={profile.links.email.href} variant="primary" icon="mail">
+      Email me
+    </AppButton>
+    <AppButton href={profile.links.cv.href} variant="secondary" icon="file" download>
+      Download CV
+    </AppButton>
+    <AppLink href={profile.links.github.href} external>
+      <AppIconGlyph name="github" />
+      GitHub
+    </AppLink>
+    <AppLink href={profile.links.linkedin.href} external>
+      <AppIconGlyph name="linkedin" />
+      LinkedIn
+    </AppLink>
+  </div>
+
+  <footer class="contact__footer">
+    <p>
+      © {year} {profile.name}
+    </p>
+    <p>
+      {profile.title}, {profile.location}
+    </p>
+    <span class="contact__indicator" aria-hidden="true" data-indicator></span>
+  </footer>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    min-height: 100svh;
+    justify-content: center;
+    padding: clamp(7rem, 14vw, 11rem) clamp(1.25rem, 4vw, 3rem) 9rem;
+    max-width: 90rem;
+    margin: 0 auto;
+  }
+  .contact__email {
+    align-self: flex-start;
+    max-width: 100%;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 7.4vw, 6.75rem);
+    line-height: 1;
+    letter-spacing: var(--tracking-display);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    padding-bottom: 0.15em;
+    background:
+      linear-gradient(var(--color-accent), var(--color-accent)) 0 100% / 0% 3px no-repeat,
+      linear-gradient(var(--color-line-strong), var(--color-line-strong)) 0 100% / 100% 1px no-repeat;
+    transition: background-size 600ms var(--ease-out-expo);
+  }
+  .contact__email:hover,
+  .contact__email:focus-visible {
+    background-size:
+      100% 3px,
+      100% 1px;
+  }
+  .contact__footer {
+    position: absolute;
+    left: clamp(1.25rem, 4vw, 3rem);
+    right: clamp(1.25rem, 4vw, 3rem);
+    bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-bottom: 1.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  .contact__indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 8.5rem;
+    height: 0.3rem;
+    translate: -50% 0;
+    border-radius: 1rem;
+    background: var(--color-text);
+    transform-origin: center;
+  }
+</style>
+
+<script>
+  import { initContact } from "../utils/contact-motion";
+  import { whenIdle } from "../../../lib/motion";
+  whenIdle(initContact);
+</script>

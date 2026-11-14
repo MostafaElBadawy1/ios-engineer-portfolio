@@ -1,0 +1,58 @@
+---
+import type { ExperienceItem, Profile } from "../../../types/profile";
+
+/** Experience as a ruled list: period, role, organization, one line of detail. */
+export interface ExperienceListProps {
+  items: readonly ExperienceItem[];
+  education: Profile["education"];
+}
+const { items, education } = Astro.props as ExperienceListProps;
+---
+
+<div>
+  <h3 class="mb-6 font-display text-title font-bold tracking-display" data-reveal-title>
+    Experience
+  </h3>
+  <ol class="list-none p-0">
+    {items.map((item) => (
+      <li class="row" data-row>
+        <p class="font-mono text-sm text-text-muted">{item.period}</p>
+        <div>
+          <p class="font-display text-xl font-semibold">{item.role}</p>
+          <p class="text-text-muted">{item.organization}</p>
+          <p class="mt-2 max-w-detail text-text-secondary">{item.detail}</p>
+        </div>
+      </li>
+    ))}
+    <li class="row" data-row>
+      <p class="font-mono text-sm text-text-muted">{education.year}</p>
+      <div>
+        <p class="font-display text-xl font-semibold">{education.degree}</p>
+        <p class="text-text-muted">{education.school}</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<style>
+  .row {
+    position: relative;
+    display: grid;
+    gap: 0.5rem 2rem;
+    padding: 1.75rem 0;
+  }
+  .row::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: var(--color-line-strong);
+    transform-origin: left;
+    transform: scaleX(var(--draw, 1));
+  }
+  @media (min-width: 640px) {
+    .row {
+      grid-template-columns: 11rem 1fr;
+    }
+  }
+</style>
