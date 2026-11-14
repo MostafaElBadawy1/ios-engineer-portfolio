@@ -1,0 +1,21 @@
+{
+  "name": "Visitors",
+  "alternateName": "Zaeroon",
+  "summary": "Book visits to museums and religious sites across Saudi Arabia.",
+  "role": "iOS Engineer",
+  "organization": "Fixed Solutions",
+  "market": "Saudi Arabia",
+  "status": "live",
+  "storeUrl": "https://apps.apple.com/eg/app/id1543620330",
+  "metrics": [
+    { "value": "200k+", "label": "downloads" },
+    { "value": "7", "label": "languages" }
+  ],
+  "contributions": [
+    "Worked on the app that lets visitors book appointments at museums and religious sites in Saudi Arabia.",
+    "Supported localization for seven languages."
+  ],
+  "stack": ["Swift", "UIKit", "SwiftUI", "MVVM"],
+  "icon": { "monogram": "Zr", "tint": "#FDF0D5", "ink": "#071722" },
+  "order": 1
+}

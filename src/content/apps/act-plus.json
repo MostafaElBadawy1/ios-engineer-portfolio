@@ -1,0 +1,15 @@
+{
+  "name": "Act Plus",
+  "alternateName": "Actors Syndicate",
+  "summary": "Official app of the Egyptian Syndicate of Performing Arts Professions.",
+  "role": "iOS Engineer",
+  "organization": "Fixed Solutions",
+  "market": "Egypt",
+  "status": "live",
+  "storeUrl": "https://apps.apple.com/eg/app/act-plus/id6447485378",
+  "contributions": [
+    "Worked on the iOS app that brings artist news, a member directory, contacting members, and syndicate projects and activities into one place."
+  ],
+  "icon": { "monogram": "A+", "tint": "#780000", "ink": "#FDF0D5" },
+  "order": 3
+}

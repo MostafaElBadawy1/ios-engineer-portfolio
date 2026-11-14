@@ -1,0 +1,72 @@
+---
+/**
+ * iOS app icon with a true squircle mask. Until real artwork exists it renders a
+ * clearly marked placeholder: monogram, dashed keyline, and "PH".
+ */
+export interface AppIconProps {
+  monogram: string;
+  tint: string;
+  ink: string;
+  size: "xs" | "sm" | "md" | "lg" | "xl";
+  class?: string;
+}
+const { monogram, tint, ink, size, class: className } = Astro.props as AppIconProps;
+---
+
+<span class:list={["app-icon squircle", `app-icon--${size}`, className]} aria-hidden="true" data-placeholder>
+  <span class="app-icon__mono">{monogram}</span>
+</span>
+
+<style define:vars={{ tint, ink }}>
+  .app-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: var(--s);
+    height: var(--s);
+    background: var(--tint);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: calc(var(--s) * 0.34);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .app-icon--xs {
+    --s: 1.75rem;
+  }
+  .app-icon--sm {
+    --s: 2.75rem;
+  }
+  .app-icon--md {
+    --s: 3.5rem;
+  }
+  .app-icon--lg {
+    --s: 5rem;
+  }
+  .app-icon--xl {
+    --s: 6.5rem;
+  }
+  .app-icon::before {
+    content: "";
+    position: absolute;
+    inset: 10%;
+    border: 1px dashed currentColor;
+    border-radius: 28%;
+    opacity: 0.3;
+  }
+  .app-icon::after {
+    content: "PH";
+    position: absolute;
+    bottom: 12%;
+    font-size: max(6px, calc(var(--s) * 0.11));
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+  }
+  .app-icon--xs::before,
+  .app-icon--xs::after,
+  .app-icon--xs .app-icon__mono {
+    display: none;
+  }
+</style>

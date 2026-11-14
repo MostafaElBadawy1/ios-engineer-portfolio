@@ -1,0 +1,75 @@
+---
+import AppIconGlyph, { type AppIconGlyphProps } from "./AppIconGlyph.astro";
+
+/**
+ * Link styled as a button. `primary` is the one red fill per screen; `secondary` is a hairline.
+ * External links open in a new tab safely.
+ */
+export interface AppButtonProps {
+  href: string;
+  variant: "primary" | "secondary";
+  icon?: AppIconGlyphProps["name"];
+  external?: boolean;
+  download?: boolean;
+  class?: string;
+}
+const { href, variant, icon, external = false, download = false, class: className } = Astro.props as AppButtonProps;
+---
+
+<a
+  href={href}
+  class:list={["app-button", `app-button--${variant}`, className]}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+  download={download || undefined}
+>
+  {icon && <AppIconGlyph name={icon} class="app-button__icon" />}
+  <span>
+    <slot />
+  </span>
+</a>
+
+<style>
+  .app-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0 1.25rem;
+    border-radius: 0.875rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    overflow: hidden;
+    transition:
+      background-color 240ms var(--ease-out-expo),
+      border-color 240ms var(--ease-out-expo),
+      transform 160ms var(--ease-out-expo);
+  }
+  .app-button:active {
+    transform: scale(0.97);
+  }
+  .app-button--primary {
+    background: var(--color-accent);
+    color: var(--color-text);
+  }
+  .app-button--primary:hover {
+    background: var(--color-accent-deep);
+  }
+  .app-button--secondary {
+    color: var(--color-text);
+    border: 1px solid var(--color-line-strong);
+  }
+  .app-button--secondary:hover {
+    border-color: var(--color-secondary);
+  }
+  :global(.app-button__icon) {
+    transition: transform 320ms var(--ease-out-expo);
+  }
+  .app-button:hover :global(.app-button__icon) {
+    transform: translateY(-1px) scale(1.08);
+  }
+</style>

@@ -1,0 +1,12 @@
+{
+  "name": "Alharamain",
+  "summary": "Services for visitors on their journey at the Grand Mosque in Mecca.",
+  "role": "iOS Engineer",
+  "organization": "Fixed Solutions",
+  "market": "Saudi Arabia",
+  "status": "live",
+  "storeUrl": "https://apps.apple.com/eg/app/id1115020295",
+  "contributions": ["Worked on the iOS app that serves visitors throughout their journey at the Grand Mosque."],
+  "icon": { "monogram": "Hr", "tint": "#0E2A3D", "ink": "#FDF0D5" },
+  "order": 4
+}

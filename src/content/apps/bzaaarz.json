@@ -1,0 +1,17 @@
+{
+  "name": "Bzaaarz",
+  "summary": "A Kuwaiti e-commerce app.",
+  "role": "iOS Engineer",
+  "organization": "Freelance",
+  "market": "Kuwait",
+  "status": "live",
+  "storeUrl": "https://apps.apple.com/eg/app/bzaaarz/id6448076974",
+  "contributions": [
+    "Built core screens and features in a production e-commerce app.",
+    "Implemented UI components with the team, improved the experience, and fixed critical bugs.",
+    "Used MVVM with Combine for reactive data flow and clean state management."
+  ],
+  "stack": ["UIKit", "MVVM", "Combine"],
+  "icon": { "monogram": "Bz", "tint": "#C1121F", "ink": "#FDF0D5" },
+  "order": 5
+}

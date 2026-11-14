@@ -1,0 +1,49 @@
+---
+/**
+ * Inline text link with an underline that draws in from the start on hover.
+ * `tone="accent"` uses the AA-safe red text colour; default is ivory.
+ */
+export interface AppLinkProps {
+  href: string;
+  external?: boolean;
+  tone?: "default" | "accent";
+  class?: string;
+}
+const { href, external = false, tone = "default", class: className } = Astro.props as AppLinkProps;
+---
+
+<a
+  href={href}
+  class:list={["app-link", `app-link--${tone}`, className]}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+>
+  <slot />
+</a>
+
+<style>
+  .app-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 2.75rem;
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: none;
+    background:
+      linear-gradient(currentColor, currentColor) 0 calc(100% - 0.55rem) / 0% 1px no-repeat,
+      linear-gradient(var(--color-line-strong), var(--color-line-strong)) 0 calc(100% - 0.55rem) / 100% 1px no-repeat;
+    transition:
+      background-size 420ms var(--ease-out-expo),
+      color 200ms;
+  }
+  .app-link:hover {
+    background-size:
+      100% 1px,
+      100% 1px;
+  }
+  .app-link--accent {
+    color: var(--color-accent-text);
+  }
+</style>
