@@ -81,11 +81,13 @@ App Store listings need a landing, privacy, and support URL. For an app you own,
 
 The file name becomes the URL: `src/content/apps/fakker.json` builds `/fakker`, `/fakker/privacy`, and `/fakker/support`.
 
-## Real app icons
+## App icons
 
-Icons are clearly marked placeholders (monogram, dashed keyline, "PH") until real artwork is supplied. Missing:
-Electricity Services, Act Plus, Visitors, Alharamain, Bzaaarz, Medjol. To add real icons, put 1024×1024 PNGs in
-`src/assets/icons/` and extend `AppIcon` to render them with `astro:assets` (AVIF/WebP) when present.
+Real artwork lives in `src/assets/icons/` and is referenced by file name from each app's JSON
+(`"icon": { "image": "visitors.png", ... }`). It is served as AVIF/WebP and masked to the iOS squircle.
+Apps without an image show a clearly marked placeholder (monogram, dashed keyline, "PH").
+
+Still missing: Alharamain. Use a square export, ideally a 1024×1024 PNG.
 
 ## Deploy to Cloudflare
 
