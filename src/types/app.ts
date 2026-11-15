@@ -4,6 +4,8 @@ import { z } from "astro/zod";
 export const appSchema = z.object({
   name: z.string().min(1),
   alternateName: z.string().optional(),
+  /** Short slogan shown beside the name. */
+  tagline: z.string().max(60).optional(),
   /** Label under the home-screen icon; defaults to the first word of the name. */
   shortName: z.string().max(14).optional(),
   /** Language of the alternate name when it is not English, e.g. "ar", so it is read and shaped correctly. */

@@ -21,6 +21,7 @@ const support = data.supportEmail ?? profile.email;
   <main id="main" class="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-6 py-24">
     <AppIcon monogram={data.icon.monogram} image={data.icon.image} tint={data.icon.tint} ink={data.icon.ink} size="xl" />
     <h1 class="font-display text-title font-bold tracking-display">{titles[view]}</h1>
+    {view === "landing" && data.tagline && <p class="-mt-4 text-2xl text-text-secondary">{data.tagline}</p>}
     {view === "landing" && (
       <>
         <p class="text-2xl">{data.summary}</p>
