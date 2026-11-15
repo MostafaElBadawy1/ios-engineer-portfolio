@@ -30,8 +30,8 @@ const builtAt = formatLocalTime(new Date(), "Africa/Cairo");
         <AppButton href="#contact" variant="primary" icon="mail">
           Get in touch
         </AppButton>
-        <AppButton href={profile.links.cv.href} variant="secondary" icon="file" download>
-          Download CV
+        <AppButton href={profile.links.cv.href} variant="secondary" icon="file">
+          {profile.links.cv.label}
         </AppButton>
       </div>
     </div>

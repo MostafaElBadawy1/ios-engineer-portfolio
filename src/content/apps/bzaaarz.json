@@ -11,11 +11,7 @@
     "Implemented UI components with the team, improved the experience, and fixed critical bugs.",
     "Used MVVM with Combine for reactive data flow and clean state management."
   ],
-  "stack": [
-    "UIKit",
-    "MVVM",
-    "Combine"
-  ],
+  "stack": ["UIKit", "MVVM", "Combine"],
   "icon": {
     "monogram": "Bz",
     "tint": "#C1121F",

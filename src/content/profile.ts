@@ -12,7 +12,8 @@ export const profile: Profile = {
     "I build the apps people use to pay a bill, reach their syndicate, or book a visit to a holy site. Native Swift and UIKit at the core, SwiftUI where it fits, and architecture that keeps a big app easy to change.",
   email,
   links: {
-    cv: { label: "Download CV", href: "/cv.pdf", external: false },
+    cv: { label: "View CV", href: "/cv", external: false },
+    cvPdf: { label: "Download PDF", href: "/cv.pdf", external: false },
     github: { label: "GitHub", href: "https://github.com/MostafaElBadawy1", external: true },
     linkedin: { label: "LinkedIn", href: "https://linkedin.com/in/mostafa-elbadawy", external: true },
     whatsapp: { label: "+20 155 396 8819", href: "https://wa.me/201553968819", external: true },
@@ -24,7 +25,7 @@ export const profile: Profile = {
       organization: "Fixed Solutions",
       period: "Aug 2023 – Present",
       detail:
-        "Public-service apps for Egypt and Saudi Arabia: Electricity Services, Visitors, Study in Egypt, Alharamain, and Act Plus.",
+        "Public-service apps for Egypt and Saudi Arabia: Electricity Services, Visitors, Study in Egypt Admission, Alharamain, and Act +.",
     },
     {
       role: "iOS Engineer, freelance",
@@ -40,10 +41,26 @@ export const profile: Profile = {
     },
   ],
   skills: [
-    { name: "iOS", items: ["Swift", "SwiftUI", "UIKit", "Combine", "RxSwift"] },
-    { name: "Cross-platform", items: ["React Native", "Kotlin Multiplatform"] },
+    { name: "iOS", items: ["Swift", "SwiftUI", "UIKit", "Swift Concurrency", "Combine", "RxSwift"] },
+    {
+      name: "Data and networking",
+      items: ["SwiftData", "Core Data", "REST APIs and Codable", "Alamofire", "Keychain"],
+    },
+    {
+      name: "Platform features",
+      items: [
+        "Push notifications",
+        "MapKit and Core Location",
+        "Payments and StoreKit",
+        "Localization and RTL",
+        "Dark mode",
+        "Accessibility",
+      ],
+    },
     { name: "Architecture", items: ["Clean Architecture", "MVVM", "Modularization", "SOLID", "Unit testing"] },
-    { name: "Tools", items: ["Git and Gitflow", "CI/CD", "Firebase", "Alamofire"] },
+    { name: "Testing and release", items: ["XCTest", "Instruments", "App Store Connect", "Fastlane", "CI/CD"] },
+    { name: "Cross-platform", items: ["React Native", "Kotlin Multiplatform"] },
+    { name: "Tools", items: ["Xcode", "Swift Package Manager", "Git and Gitflow", "Firebase"] },
     {
       name: "AI tools and models",
       items: ["Claude Code", "Codex", "Gemini CLI", "OpenCode", "GLM", "DeepSeek", "Kimi", "Qwen"],

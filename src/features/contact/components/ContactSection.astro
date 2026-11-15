@@ -29,8 +29,8 @@ const [emailUser, emailDomain] = profile.email.split("@");
     <AppButton href={profile.links.email.href} variant="primary" icon="mail">
       Email me
     </AppButton>
-    <AppButton href={profile.links.cv.href} variant="secondary" icon="file" download>
-      Download CV
+    <AppButton href={profile.links.cv.href} variant="secondary" icon="file">
+      {profile.links.cv.label}
     </AppButton>
     <AppLink href={profile.links.github.href} external>
       <AppIconGlyph name="github" />

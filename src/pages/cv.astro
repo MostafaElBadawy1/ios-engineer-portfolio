@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AppButton from "../components/ui/AppButton.astro";
+import AppLink from "../components/ui/AppLink.astro";
+import CvViewer from "../features/cv/components/CvViewer.astro";
+import { profile } from "../content/profile";
+---
+
+<BaseLayout title={`CV · ${profile.name}`} description={`${profile.name}, ${profile.title}. View or download the CV.`}>
+  <header class="cv-bar">
+    <AppLink href="/">Back to portfolio</AppLink>
+    <AppButton href={profile.links.cvPdf.href} variant="primary" icon="file" download>
+      {profile.links.cvPdf.label}
+    </AppButton>
+  </header>
+  <main id="main" class="cv-main">
+    <h1 class="sr-only">{profile.name}, CV</h1>
+    <CvViewer />
+  </main>
+</BaseLayout>
+
+<style>
+  .cv-bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem clamp(1.25rem, 4vw, 3rem);
+    background: rgb(3 10 16 / 0.92);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .cv-main {
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem) 4rem;
+  }
+</style>

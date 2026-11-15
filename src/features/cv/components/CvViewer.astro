@@ -1,0 +1,40 @@
+---
+import cvSource from "../../../../cv/cv.html?raw";
+import { toViewerDocument } from "../utils/viewer-document";
+
+/** The CV shown as a page, in an isolated frame so its print styles never touch the site. */
+const doc = toViewerDocument(cvSource);
+---
+
+<div class="paper">
+  <iframe class="paper__frame" title="Mostafa El-Badawy, CV" srcdoc={doc} loading="eager" data-cv-frame></iframe>
+</div>
+
+<style>
+  .paper {
+    width: min(100%, 56rem);
+    margin: 0 auto;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
+  }
+  .paper__frame {
+    display: block;
+    width: 100%;
+    min-height: 80svh;
+    border: 0;
+    background: #fffcf5;
+  }
+</style>
+
+<script>
+  // Grow the frame to its content so the page scrolls, not the frame.
+  const frame = document.querySelector<HTMLIFrameElement>("[data-cv-frame]");
+  const fit = (): void => {
+    const body = frame?.contentDocument?.documentElement;
+    if (frame && body) frame.style.height = `${body.scrollHeight}px`;
+  };
+  frame?.addEventListener("load", fit);
+  addEventListener("resize", fit);
+  fit();
+</script>
