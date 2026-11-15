@@ -1,7 +1,7 @@
 {
   "name": "Electricity Services",
   "alternateName": "Egyptian Electricity Holding Company",
-  "summary": "Citizen, employee, and emergency apps for Egypt's national electricity services.",
+  "summary": "Citizen and employee apps for Egypt’s national electricity services.",
   "role": "iOS Engineer",
   "organization": "Fixed Solutions",
   "market": "Egypt",
@@ -13,7 +13,7 @@
       "label": "downloads"
     },
     {
-      "value": "3",
+      "value": "2",
       "label": "apps"
     }
   ],
@@ -22,7 +22,11 @@
     "Built sort and filter so people can find their requests faster.",
     "Contributed to refactoring the UI from UIKit to SwiftUI."
   ],
-  "stack": ["SwiftUI", "MVVM", "Modularization"],
+  "stack": [
+    "SwiftUI",
+    "MVVM",
+    "Modularization"
+  ],
   "icon": {
     "monogram": "EE",
     "tint": "#669BBC",
