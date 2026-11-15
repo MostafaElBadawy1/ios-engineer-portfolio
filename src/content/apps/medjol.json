@@ -11,6 +11,11 @@
     "Built responsive UI and fixed bugs for a smooth experience."
   ],
   "stack": ["UIKit", "MVVM", "RxSwift"],
-  "icon": { "monogram": "Md", "tint": "#12384F", "ink": "#A4B6C1" },
+  "icon": {
+    "monogram": "Md",
+    "tint": "#12384F",
+    "ink": "#A4B6C1",
+    "image": "medjol.png"
+  },
   "order": 6
 }

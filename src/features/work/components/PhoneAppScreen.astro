@@ -17,7 +17,11 @@ const rows = screenRows(data);
     <span class="screen__status">9:41</span>
     <AppIcon monogram={data.icon.monogram} image={data.icon.image} tint={data.icon.tint} ink={data.icon.ink} size="lg" />
     <p class="screen__name">{data.name}</p>
-    {data.alternateName && <p class="screen__alt">{data.alternateName}</p>}
+    {data.alternateName && (
+      <p class="screen__alt" lang={data.alternateNameLang}>
+        {data.alternateName}
+      </p>
+    )}
   </header>
   <dl class="screen__list">
     {rows.map((row) => (

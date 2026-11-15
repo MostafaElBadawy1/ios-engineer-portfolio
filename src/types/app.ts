@@ -4,6 +4,8 @@ import { z } from "astro/zod";
 export const appSchema = z.object({
   name: z.string().min(1),
   alternateName: z.string().optional(),
+  /** Language of the alternate name when it is not English, e.g. "ar", so it is read and shaped correctly. */
+  alternateNameLang: z.enum(["ar"]).optional(),
   summary: z.string().min(1),
   role: z.string().min(1),
   organization: z.string().min(1),

@@ -28,7 +28,7 @@ const meta = [data.role, data.organization, data.market].filter(Boolean).join(" 
       {data.name}
     </h3>
     {data.alternateName && (
-      <p class="-mt-4 text-text-muted" data-chapter-item>
+      <p class="-mt-4 text-text-muted" data-chapter-item lang={data.alternateNameLang}>
         {data.alternateName}
       </p>
     )}

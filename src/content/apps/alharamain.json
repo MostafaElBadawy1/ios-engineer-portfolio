@@ -10,8 +10,7 @@
   "icon": {
     "monogram": "Hr",
     "tint": "#0E2A3D",
-    "ink": "#FDF0D5",
-    "image": "alharamain.png"
+    "ink": "#FDF0D5"
   },
   "order": 4
 }

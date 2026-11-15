@@ -1,11 +1,18 @@
 {
   "name": "Fakker",
-  "summary": "My own app, in development now.",
+  "alternateName": "فاكر",
+  "alternateNameLang": "ar",
+  "summary": "An Arabic-first iOS app that keeps track of maintenance for your cars and, coming soon, your home appliances.",
   "role": "Creator and iOS Engineer",
   "organization": "Personal project",
   "status": "in-development",
   "statusNote": "In development now. Not on the App Store yet.",
-  "contributions": ["Designing and building it end to end."],
+  "contributions": [
+    "Log services, expenses, documents, and wishlist items for each car, and get reminders when maintenance is due.",
+    "Arabic-first with full right-to-left support, plus light and dark mode.",
+    "Home appliance tracking is coming soon."
+  ],
+  "stack": ["SwiftUI", "SwiftData"],
   "icon": { "monogram": "Fk", "tint": "#0B2030", "ink": "#FDF0D5" },
   "order": 7,
   "ownApp": true
