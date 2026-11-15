@@ -8,13 +8,19 @@
   "market": "Egypt",
   "status": "retired",
   "statusNote": "This version is retired, so there is no App Store link.",
-  "contributions": ["Worked on the emergency app alongside the citizen and employee apps in the Electricity Services family."],
-  "stack": ["SwiftUI", "MVVM", "Modularization"],
+  "contributions": [
+    "Worked on the emergency app alongside the citizen and employee apps in the Electricity Services family."
+  ],
+  "stack": [
+    "SwiftUI",
+    "MVVM",
+    "Modularization"
+  ],
   "icon": {
     "monogram": "EE",
     "tint": "#FDF0D5",
     "ink": "#071722",
     "image": "electricity-emergency.png"
   },
-  "order": 3
+  "order": 2
 }

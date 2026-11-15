@@ -22,12 +22,16 @@
     "Built sort and filter so people can find their requests faster.",
     "Contributed to refactoring the UI from UIKit to SwiftUI."
   ],
-  "stack": ["SwiftUI", "MVVM", "Modularization"],
+  "stack": [
+    "SwiftUI",
+    "MVVM",
+    "Modularization"
+  ],
   "icon": {
     "monogram": "EE",
     "tint": "#669BBC",
     "ink": "#030A10",
     "image": "electricity.png"
   },
-  "order": 2
+  "order": 1
 }
