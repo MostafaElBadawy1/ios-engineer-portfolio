@@ -3,10 +3,12 @@ import { getCollection } from "astro:content";
 import PhoneMockup from "./PhoneMockup.astro";
 import ProjectChapter from "./ProjectChapter.astro";
 import WorkRail from "./WorkRail.astro";
-import { sortForWork } from "../utils/apps";
+import { shippedApps, sortForWork } from "../utils/apps";
 
 /** Selected work: chapters scroll on the left while one phone stays and opens each app. */
 const apps = sortForWork(await getCollection("apps"));
+const shipped = shippedApps(apps).length;
+const building = apps.filter((app) => app.data.status === "in-development").map((app) => app.data.name);
 ---
 
 <section id="work" class="work" aria-labelledby="work-title" data-work data-scene="work">
@@ -15,8 +17,8 @@ const apps = sortForWork(await getCollection("apps"));
       Selected work
     </h2>
     <p class="max-w-measure text-xl text-text-secondary" data-work-lede>
-      {apps.length} shipped apps, from national public services in Egypt and Saudi Arabia to freelance products in commerce and
-      health. One at a time.
+      {shipped} shipped apps, from national public services in Egypt and Saudi Arabia to freelance products in commerce and health
+      {building.length > 0 ? `, plus ${building.join(" and ")}, which I'm building now` : ""}. One at a time.
     </p>
   </header>
 

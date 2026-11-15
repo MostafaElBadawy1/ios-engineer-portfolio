@@ -1,5 +1,20 @@
 import type { AppData, AppEntry } from "../../../types/app";
 
+/** How each release status reads on the phone screen. */
+const STATUS_LABELS: Record<AppData["status"], string> = {
+  live: "On the App Store",
+  retired: "Retired",
+  "in-development": "In development",
+};
+
+/** Row label for organizations that are not employers. */
+const ORGANIZATION_LABELS: Record<string, string> = { Freelance: "Engagement", "Personal project": "Type" };
+
+/** Apps that are released, live or retired: what "shipped" counts. */
+export function shippedApps(entries: readonly AppEntry[]): AppEntry[] {
+  return entries.filter((entry) => entry.data.status !== "in-development");
+}
+
 /** One label/value row on the phone's app screen. */
 export interface ScreenRow {
   label: string;
@@ -26,12 +41,12 @@ export function ownApps(entries: readonly AppEntry[]): AppEntry[] {
 export function screenRows(app: AppData): ScreenRow[] {
   const rows: ScreenRow[] = [
     { label: "Role", value: app.role },
-    { label: app.organization === "Freelance" ? "Engagement" : "Built at", value: app.organization },
+    { label: ORGANIZATION_LABELS[app.organization] ?? "Built at", value: app.organization },
   ];
   if (app.market) rows.push({ label: "Market", value: app.market });
   for (const metric of app.metrics) rows.push({ label: capitalize(metric.label), value: metric.value });
   if (app.stack.length > 0) rows.push({ label: "Stack", value: app.stack.join(", ") });
-  rows.push({ label: "Status", value: app.status === "live" ? "On the App Store" : "Retired" });
+  rows.push({ label: "Status", value: STATUS_LABELS[app.status] });
   return rows;
 }
 

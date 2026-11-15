@@ -1,6 +1,6 @@
 # mostafaelbadawy.com
 
-Personal portfolio of Mostafa Elbadawy, iOS Engineer. A static Astro site with scroll-driven storytelling:
+Personal portfolio of Mostafa El-Badawy, iOS Engineer. A static Astro site with scroll-driven storytelling:
 intro, about, a sticky iPhone that opens each app as you scroll, and a contact finale.
 
 **Stack:** Astro 7 · TypeScript (strict) · Tailwind CSS v4 · GSAP + ScrollTrigger + SplitText · Cloudflare Workers (static assets)
@@ -12,16 +12,16 @@ npm install
 npm run dev        # http://localhost:4321
 ```
 
-| Script | What it does |
-| --- | --- |
-| `npm run dev` | Dev server with hot reload |
-| `npm run build` | Type-check (`astro check`) then build to `dist/` |
-| `npm run preview` | Serve the built `dist/` |
-| `npm test` | Unit tests (Vitest) |
-| `npm run lint` | ESLint (zero violations required) |
-| `npm run format` | Prettier |
-| `npm run assets` | Re-render `public/cv.pdf` and `public/og.png` (needs `npx playwright install chromium` once) |
-| `npm run deploy` | Build and deploy with Wrangler |
+| Script            | What it does                                                                                 |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| `npm run dev`     | Dev server with hot reload                                                                   |
+| `npm run build`   | Type-check (`astro check`) then build to `dist/`                                             |
+| `npm run preview` | Serve the built `dist/`                                                                      |
+| `npm test`        | Unit tests (Vitest)                                                                          |
+| `npm run lint`    | ESLint (zero violations required)                                                            |
+| `npm run format`  | Prettier                                                                                     |
+| `npm run assets`  | Re-render `public/cv.pdf` and `public/og.png` (needs `npx playwright install chromium` once) |
+| `npm run deploy`  | Build and deploy with Wrangler                                                               |
 
 ## Project structure
 

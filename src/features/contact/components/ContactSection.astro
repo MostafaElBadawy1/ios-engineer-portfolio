@@ -4,19 +4,19 @@ import AppLink from "../../../components/ui/AppLink.astro";
 import AppIconGlyph from "../../../components/ui/AppIconGlyph.astro";
 import { profile } from "../../../content/profile";
 
-/** The ending: one clear ask, the address big enough to tap, and a quiet sign-off. */
+/** The ending: the address big enough to tap, the links, and a quiet sign-off. */
 const year = new Date().getFullYear();
+// Break only after the "@" when the address can't fit on one line.
+const [emailUser, emailDomain] = profile.email.split("@");
 ---
 
 <section id="contact" class="contact" aria-labelledby="contact-title" data-contact data-scene="contact">
   <h2 id="contact-title" class="max-w-statement font-display text-title font-bold tracking-display" data-contact-title>
-    Have an app to build, or a team to join?
+    Contact
   </h2>
-  <p class="max-w-measure text-xl text-text-secondary" data-contact-item>
-    I'm open to iOS roles and freelance projects. Email is the fastest way to reach me.
-  </p>
   <a href={profile.links.email.href} class="contact__email" data-email>
-    {profile.email}
+    <span class="nowrap">{emailUser}@</span>
+    <span class="nowrap">{emailDomain}</span>
   </a>
   <div class="flex flex-wrap items-center gap-x-6 gap-y-3" data-contact-item>
     <AppButton href={profile.links.email.href} variant="primary" icon="mail">
@@ -64,11 +64,10 @@ const year = new Date().getFullYear();
     color: var(--color-text);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(1.75rem, 7.4vw, 6.75rem);
+    font-size: clamp(1.75rem, 6.1vw, 6rem);
     line-height: 1;
     letter-spacing: var(--tracking-display);
     text-decoration: none;
-    overflow-wrap: anywhere;
     padding-bottom: 0.15em;
     background:
       linear-gradient(var(--color-accent), var(--color-accent)) 0 100% / 0% 3px no-repeat,
@@ -80,6 +79,10 @@ const year = new Date().getFullYear();
     background-size:
       100% 3px,
       100% 1px;
+  }
+  .nowrap {
+    display: inline-block;
+    white-space: nowrap;
   }
   .contact__footer {
     position: absolute;

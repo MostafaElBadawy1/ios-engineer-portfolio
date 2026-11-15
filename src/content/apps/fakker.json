@@ -1,0 +1,12 @@
+{
+  "name": "Fakker",
+  "summary": "My own app, in development now.",
+  "role": "Creator and iOS Engineer",
+  "organization": "Personal project",
+  "status": "in-development",
+  "statusNote": "In development now. Not on the App Store yet.",
+  "contributions": ["Designing and building it end to end."],
+  "icon": { "monogram": "Fk", "tint": "#0B2030", "ink": "#FDF0D5" },
+  "order": 7,
+  "ownApp": true
+}

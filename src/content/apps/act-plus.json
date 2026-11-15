@@ -10,6 +10,11 @@
   "contributions": [
     "Worked on the iOS app that brings artist news, a member directory, contacting members, and syndicate projects and activities into one place."
   ],
-  "icon": { "monogram": "A+", "tint": "#780000", "ink": "#FDF0D5" },
+  "icon": {
+    "monogram": "A+",
+    "tint": "#780000",
+    "ink": "#FDF0D5",
+    "image": "act-plus.png"
+  },
   "order": 3
 }

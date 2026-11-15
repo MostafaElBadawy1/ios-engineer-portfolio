@@ -20,7 +20,13 @@ const dock = ["mail", "github", "linkedin", "file"] as const;
   <ul class="home__grid">
     {apps.map((app) => (
       <li class="home__app" data-home-icon={app.id}>
-        <AppIcon monogram={app.data.icon.monogram} tint={app.data.icon.tint} ink={app.data.icon.ink} size="sm" />
+        <AppIcon
+          monogram={app.data.icon.monogram}
+          image={app.data.icon.image}
+          tint={app.data.icon.tint}
+          ink={app.data.icon.ink}
+          size="sm"
+        />
         <span>{app.data.name.split(" ")[0]}</span>
       </li>
     ))}

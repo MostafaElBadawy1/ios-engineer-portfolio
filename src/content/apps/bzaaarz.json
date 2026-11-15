@@ -12,6 +12,11 @@
     "Used MVVM with Combine for reactive data flow and clean state management."
   ],
   "stack": ["UIKit", "MVVM", "Combine"],
-  "icon": { "monogram": "Bz", "tint": "#C1121F", "ink": "#FDF0D5" },
+  "icon": {
+    "monogram": "Bz",
+    "tint": "#C1121F",
+    "ink": "#FDF0D5",
+    "image": "bzaaarz.png"
+  },
   "order": 5
 }

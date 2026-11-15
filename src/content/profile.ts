@@ -1,10 +1,10 @@
 import type { Profile } from "../types/profile";
 
-const email = "hi@mostafaelbadawy.com";
+const email = "contact@mostafaelbadawy.com";
 
 /** Site copy about Mostafa. Every fact comes from his CV and brief. */
 export const profile: Profile = {
-  name: "Mostafa Elbadawy",
+  name: "Mostafa El-Badawy",
   title: "iOS Engineer",
   location: "Egypt",
   bio: "iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.",

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { appSchema, type AppData, type AppEntry } from "../../../types/app";
-import { ownApps, screenRows, sortForWork } from "../utils/apps";
+import { ownApps, screenRows, shippedApps, sortForWork } from "../utils/apps";
 
 const base: AppData = appSchema.parse({
   name: "Sample",
@@ -73,5 +73,26 @@ describe("appSchema", () => {
 
   it("rejects a store link that is not a URL", () => {
     expect(() => appSchema.parse({ ...base, storeUrl: "not a url" })).toThrow();
+  });
+});
+
+describe("in-development apps", () => {
+  it("reads as in development on the phone screen", () => {
+    expect(screenRows({ ...base, status: "in-development" })).toContainEqual({ label: "Status", value: "In development" });
+  });
+
+  it("are not counted as shipped", () => {
+    const apps = [entry("live", {}), entry("old", { status: "retired" }), entry("wip", { status: "in-development" })];
+    expect(shippedApps(apps).map((e) => e.id)).toEqual(["live", "old"]);
+  });
+});
+
+describe("icon image", () => {
+  it("accepts a file name in the icons folder", () => {
+    expect(appSchema.parse({ ...base, icon: { ...base.icon, image: "act-plus.png" } }).icon.image).toBe("act-plus.png");
+  });
+
+  it("rejects paths, so icons always come from src/assets/icons", () => {
+    expect(() => appSchema.parse({ ...base, icon: { ...base.icon, image: "../secret.png" } })).toThrow();
   });
 });

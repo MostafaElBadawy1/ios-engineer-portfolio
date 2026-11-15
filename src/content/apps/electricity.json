@@ -8,8 +8,14 @@
   "status": "retired",
   "statusNote": "This version is retired, so there is no App Store link.",
   "metrics": [
-    { "value": "100k+", "label": "downloads" },
-    { "value": "3", "label": "apps" }
+    {
+      "value": "100k+",
+      "label": "downloads"
+    },
+    {
+      "value": "3",
+      "label": "apps"
+    }
   ],
   "contributions": [
     "Built the authentication flow, profile screen, and dynamic forms.",
@@ -17,6 +23,11 @@
     "Contributed to refactoring the UI from UIKit to SwiftUI."
   ],
   "stack": ["SwiftUI", "MVVM", "Modularization"],
-  "icon": { "monogram": "EE", "tint": "#669BBC", "ink": "#030A10" },
+  "icon": {
+    "monogram": "EE",
+    "tint": "#669BBC",
+    "ink": "#030A10",
+    "image": "electricity.png"
+  },
   "order": 2
 }

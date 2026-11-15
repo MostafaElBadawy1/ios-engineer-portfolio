@@ -1,23 +1,55 @@
 ---
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 /**
- * iOS app icon with a true squircle mask. Until real artwork exists it renders a
- * clearly marked placeholder: monogram, dashed keyline, and "PH".
+ * iOS app icon with a true squircle mask. Renders the real artwork from
+ * src/assets/icons when `image` is set; otherwise a clearly marked placeholder:
+ * monogram, dashed keyline, and "PH".
  */
 export interface AppIconProps {
   monogram: string;
   tint: string;
   ink: string;
   size: "xs" | "sm" | "md" | "lg" | "xl";
+  /** File name in src/assets/icons. */
+  image?: string;
   class?: string;
 }
-const { monogram, tint, ink, size, class: className } = Astro.props as AppIconProps;
+const { monogram, tint, ink, size, image, class: className } = Astro.props as AppIconProps;
+const files = import.meta.glob<{ default: ImageMetadata }>("../../assets/icons/*.{png,jpg,webp}", { eager: true });
+const artwork = image ? files[`../../assets/icons/${image}`]?.default : undefined;
+if (image && !artwork) throw new Error(`App icon "${image}" is missing from src/assets/icons.`);
+const pixels = { xs: 28, sm: 44, md: 56, lg: 80, xl: 104 }[size];
 ---
 
-<span class:list={["app-icon squircle", `app-icon--${size}`, className]} aria-hidden="true" data-placeholder>
-  <span class="app-icon__mono">{monogram}</span>
+<span
+  class:list={["app-icon squircle", `app-icon--${size}`, className]}
+  aria-hidden="true"
+  data-placeholder={artwork ? undefined : ""}
+>
+  {artwork ? (
+    <Picture
+      src={artwork}
+      alt=""
+      widths={[pixels, pixels * 2, pixels * 3].filter((w) => w <= artwork.width)}
+      sizes={`${pixels}px`}
+      formats={["avif", "webp"]}
+      class="app-icon__art"
+    />
+  ) : (
+    <span class="app-icon__mono">{monogram}</span>
+  )}
 </span>
 
 <style define:vars={{ tint, ink }}>
+  .app-icon :global(picture),
+  .app-icon :global(.app-icon__art) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   .app-icon {
     position: relative;
     display: grid;
@@ -48,7 +80,7 @@ const { monogram, tint, ink, size, class: className } = Astro.props as AppIconPr
   .app-icon--xl {
     --s: 6.5rem;
   }
-  .app-icon::before {
+  .app-icon[data-placeholder]::before {
     content: "";
     position: absolute;
     inset: 10%;
@@ -56,7 +88,7 @@ const { monogram, tint, ink, size, class: className } = Astro.props as AppIconPr
     border-radius: 28%;
     opacity: 0.3;
   }
-  .app-icon::after {
+  .app-icon[data-placeholder]::after {
     content: "PH";
     position: absolute;
     bottom: 12%;

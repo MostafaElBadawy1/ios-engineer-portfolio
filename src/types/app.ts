@@ -8,7 +8,7 @@ export const appSchema = z.object({
   role: z.string().min(1),
   organization: z.string().min(1),
   market: z.string().optional(),
-  status: z.enum(["live", "retired"]),
+  status: z.enum(["live", "retired", "in-development"]),
   statusNote: z.string().optional(),
   storeUrl: z.url().optional(),
   metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
@@ -18,6 +18,11 @@ export const appSchema = z.object({
     monogram: z.string().min(1).max(3),
     tint: z.string().regex(/^#[0-9a-fA-F]{6}$/),
     ink: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+    /** File name in src/assets/icons; omit to show the marked placeholder. */
+    image: z
+      .string()
+      .regex(/^[\w-]+\.(png|jpg|webp)$/)
+      .optional(),
   }),
   order: z.number().int(),
   /** Own apps get /[app], /[app]/privacy and /[app]/support pages. */

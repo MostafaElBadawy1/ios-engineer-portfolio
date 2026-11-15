@@ -14,7 +14,13 @@ const { apps } = Astro.props as WorkRailProps;
     {apps.map((app) => (
       <li>
         <a href={`#app-${app.id}`} class="rail__link" data-rail={app.id}>
-          <AppIcon monogram={app.data.icon.monogram} tint={app.data.icon.tint} ink={app.data.icon.ink} size="xs" />
+          <AppIcon
+            monogram={app.data.icon.monogram}
+            image={app.data.icon.image}
+            tint={app.data.icon.tint}
+            ink={app.data.icon.ink}
+            size="xs"
+          />
           <span class="sr-only">{app.data.name}</span>
         </a>
       </li>
