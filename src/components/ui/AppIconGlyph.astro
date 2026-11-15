@@ -1,7 +1,7 @@
 ---
 /** Authored stroke icons in one weight. Decorative: pair with visible text or an aria-label. */
 export interface AppIconGlyphProps {
-  name: "mail" | "github" | "linkedin" | "file" | "external" | "arrow-down";
+  name: "mail" | "github" | "linkedin" | "whatsapp" | "file" | "external" | "arrow-down";
   class?: string;
 }
 const { name, class: className } = Astro.props as AppIconGlyphProps;
@@ -9,6 +9,8 @@ const paths: Record<AppIconGlyphProps["name"], string> = {
   mail: "M4 6.5h16v11H4z M4.5 7l7.5 6 7.5-6",
   github: "M8 8l-4 4 4 4 M16 8l4 4-4 4 M13.5 5l-3 14",
   linkedin: "M6 10v8 M6 6.5v.01 M10.5 18v-8 M10.5 13.5c0-2 1.3-3.5 3.2-3.5S17 11.3 17 13.5V18",
+  whatsapp:
+    "M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.4 18.3z M9.5 9.2c.2 2.4 2.9 5.1 5.3 5.3l.9-1.1-1.6-.8-.6.6c-.9-.4-1.6-1.1-2-2l.6-.6-.8-1.6z",
   file: "M7 3h7l4 4v14H7z M14 3v4h4 M10 12h5 M10 16h5",
   external: "M9 6h9v9 M18 6 6 18",
   "arrow-down": "M12 5v14 M6 13l6 6 6-6",

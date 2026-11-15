@@ -11,13 +11,20 @@ const [emailUser, emailDomain] = profile.email.split("@");
 ---
 
 <section id="contact" class="contact" aria-labelledby="contact-title" data-contact data-scene="contact">
-  <h2 id="contact-title" class="max-w-statement font-display text-title font-bold tracking-display" data-contact-title>
-    Contact
+  <h2 id="contact-title" class="max-w-statement font-display text-statement font-medium tracking-snug" data-contact-title>
+    Taking on iOS projects and consulting work. Fastest reply at
   </h2>
   <a href={profile.links.email.href} class="contact__email" data-email>
     <span class="nowrap">{emailUser}@</span>
     <span class="nowrap">{emailDomain}</span>
   </a>
+  <p class="flex flex-wrap items-center gap-x-3 text-xl text-text-secondary" data-contact-item>
+    or on WhatsApp
+    <AppLink href={profile.links.whatsapp.href} external class="text-xl">
+      <AppIconGlyph name="whatsapp" />
+      {profile.links.whatsapp.label}
+    </AppLink>
+  </p>
   <div class="flex flex-wrap items-center gap-x-6 gap-y-3" data-contact-item>
     <AppButton href={profile.links.email.href} variant="primary" icon="mail">
       Email me

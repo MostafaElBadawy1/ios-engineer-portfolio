@@ -46,6 +46,10 @@ const builtAt = formatLocalTime(new Date(), "Africa/Cairo");
           <AppIconGlyph name="linkedin" />
           LinkedIn
         </AppLink>
+        <AppLink href={profile.links.whatsapp.href} external>
+          <AppIconGlyph name="whatsapp" />
+          WhatsApp
+        </AppLink>
         <p class="ml-auto flex min-h-11 items-center gap-2 font-mono text-sm text-text-muted">
           Cairo <time data-cairo-time>{builtAt}</time>
         </p>

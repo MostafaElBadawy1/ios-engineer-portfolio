@@ -28,7 +28,7 @@ export interface Profile {
   bio: string;
   statement: string;
   email: string;
-  links: { cv: ProfileLink; github: ProfileLink; linkedin: ProfileLink; email: ProfileLink };
+  links: { cv: ProfileLink; github: ProfileLink; linkedin: ProfileLink; email: ProfileLink; whatsapp: ProfileLink };
   experience: readonly ExperienceItem[];
   skills: readonly SkillGroup[];
   education: { degree: string; school: string; year: string };

@@ -15,6 +15,7 @@ export const profile: Profile = {
     cv: { label: "Download CV", href: "/cv.pdf", external: false },
     github: { label: "GitHub", href: "https://github.com/MostafaElBadawy1", external: true },
     linkedin: { label: "LinkedIn", href: "https://linkedin.com/in/mostafa-elbadawy", external: true },
+    whatsapp: { label: "+20 155 396 8819", href: "https://wa.me/201553968819", external: true },
     email: { label: email, href: `mailto:${email}`, external: false },
   },
   experience: [
@@ -43,6 +44,10 @@ export const profile: Profile = {
     { name: "Cross-platform", items: ["React Native", "Kotlin Multiplatform"] },
     { name: "Architecture", items: ["Clean Architecture", "MVVM", "Modularization", "SOLID", "Unit testing"] },
     { name: "Tools", items: ["Git and Gitflow", "CI/CD", "Firebase", "Alamofire"] },
+    {
+      name: "AI tools and models",
+      items: ["Claude Code", "Codex", "Gemini CLI", "OpenCode", "GLM", "DeepSeek", "Kimi", "Qwen"],
+    },
   ],
   education: { degree: "B.Eng. Mechatronics", school: "Mansoura University", year: "2020" },
 };
