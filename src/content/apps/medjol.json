@@ -10,12 +10,16 @@
     "Used MVVM with RxSwift for reactive bindings and state handling.",
     "Built responsive UI and fixed bugs for a smooth experience."
   ],
-  "stack": ["UIKit", "MVVM", "RxSwift"],
+  "stack": [
+    "UIKit",
+    "MVVM",
+    "RxSwift"
+  ],
   "icon": {
     "monogram": "Md",
     "tint": "#12384F",
     "ink": "#A4B6C1",
     "image": "medjol.png"
   },
-  "order": 7
+  "order": 8
 }

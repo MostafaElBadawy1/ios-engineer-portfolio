@@ -27,7 +27,7 @@ const dock = ["mail", "github", "linkedin", "file"] as const;
           ink={app.data.icon.ink}
           size="sm"
         />
-        <span>{app.data.name.split(" ")[0]}</span>
+        <span>{app.data.shortName ?? app.data.name.split(" ")[0]}</span>
       </li>
     ))}
   </ul>

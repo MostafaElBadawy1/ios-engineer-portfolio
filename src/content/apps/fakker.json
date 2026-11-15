@@ -12,13 +12,16 @@
     "Arabic-first with full right-to-left support, plus light and dark mode.",
     "Home appliance tracking is coming soon."
   ],
-  "stack": ["SwiftUI", "SwiftData"],
+  "stack": [
+    "SwiftUI",
+    "SwiftData"
+  ],
   "icon": {
     "monogram": "Fk",
     "tint": "#0B2030",
     "ink": "#FDF0D5",
     "image": "fakker.png"
   },
-  "order": 8,
+  "order": 9,
   "ownApp": true
 }
