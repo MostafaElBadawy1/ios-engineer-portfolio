@@ -7,7 +7,7 @@ export const profile: Profile = {
   name: "Mostafa El-Badawy",
   title: "iOS Engineer",
   location: "Egypt",
-  bio: "iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.",
+  bio: "iOS engineer with 3 years building public-service apps for Egypt, from national electricity services to professional syndicates. Native Swift, SwiftUI, and UIKit at the core, with production React Native experience and now working with Kotlin Multiplatform.",
   statement:
     "I build the apps people use to pay a bill, reach their syndicate, or book a visit to a holy site. Native Swift and UIKit at the core, SwiftUI where it fits, and architecture that keeps a big app easy to change.",
   email,

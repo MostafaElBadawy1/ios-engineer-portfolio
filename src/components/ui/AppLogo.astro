@@ -1,24 +1,29 @@
 ---
 /**
- * Brand mark: a cream "M" on an accent squircle, drawn like an app icon.
+ * Brand mark: an "ME" ligature on a dark squircle, drawn like an app icon. The M's last
+ * stroke doubles as the E's spine; the E's bars carry the accent.
  * Decorative next to the name; public/favicon.svg uses the same drawing.
  */
 export interface AppLogoProps {
   class?: string;
 }
 const { class: className } = Astro.props as AppLogoProps;
+const squircle = "M64 32c0 25-7 32-32 32S0 57 0 32 7 0 32 0s32 7 32 32z";
 ---
 
 <svg class:list={["app-logo", className]} viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-  <path d="M64 32c0 25-7 32-32 32S0 57 0 32 7 0 32 0s32 7 32 32z" fill="var(--color-accent)"></path>
+  <path d={squircle} fill="var(--color-surface)"></path>
   <path
-    d="M18 44V21l14 15 14-15v23"
+    d={squircle}
     fill="none"
-    stroke="var(--color-text)"
-    stroke-width="6"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    stroke="var(--color-line-strong)"
+    stroke-width="1.5"
+    transform="translate(.75 .75) scale(.977)"
   ></path>
+  <g fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12.5 44V21l12 13 12-13v23" stroke="var(--color-text)"></path>
+    <path d="M36.5 21h15M36.5 32.5h12M36.5 44h15" stroke="var(--color-accent-text)"></path>
+  </g>
 </svg>
 
 <style>
