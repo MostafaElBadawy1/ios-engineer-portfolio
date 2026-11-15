@@ -36,7 +36,13 @@ export function initContact(): void {
   const title = section.querySelector<HTMLElement>("[data-contact-title]");
   const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: "top 60%" } });
   if (title) {
-    const split = SplitText.create(title, { type: "words", mask: "words", aria: "auto" });
+    const split = SplitText.create(title, {
+      type: "words",
+      mask: "words",
+      aria: "auto",
+      charsClass: "split-char",
+      wordsClass: "split-word",
+    });
     tl.from(split.words, { yPercent: 110, duration: 1.2, stagger: 0.05 });
   }
   const chars = SplitText.create(email, { type: "chars", aria: "auto" }).chars;

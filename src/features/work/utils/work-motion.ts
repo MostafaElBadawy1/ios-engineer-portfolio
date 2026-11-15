@@ -31,7 +31,13 @@ export function initWork(): void {
 
   const title = section.querySelector<HTMLElement>("[data-work-title]");
   if (title) {
-    const split = SplitText.create(title, { type: "chars", mask: "chars", aria: "auto" });
+    const split = SplitText.create(title, {
+      type: "words,chars",
+      mask: "chars",
+      aria: "auto",
+      charsClass: "split-char",
+      wordsClass: "split-word",
+    });
     gsap.from(split.chars, { yPercent: 110, duration: 1.2, stagger: 0.03, scrollTrigger: { trigger: title, start: "top 85%" } });
     gsap.from("[data-work-lede]", { y: 24, autoAlpha: 0, duration: 1, scrollTrigger: { trigger: title, start: "top 80%" } });
   }
@@ -68,7 +74,13 @@ export function initWork(): void {
     const items = chapter.querySelectorAll<HTMLElement>("[data-chapter-item]");
     const tl = gsap.timeline({ scrollTrigger: { trigger: chapter, start: "top 65%" } });
     if (heading) {
-      const split = SplitText.create(heading, { type: "words", mask: "words", aria: "auto" });
+      const split = SplitText.create(heading, {
+        type: "words",
+        mask: "words",
+        aria: "auto",
+        charsClass: "split-char",
+        wordsClass: "split-word",
+      });
       tl.from(split.words, { yPercent: 105, duration: 1.1, stagger: 0.06 });
     }
     tl.from(items, { y: 28, autoAlpha: 0, duration: 1, stagger: 0.08 }, 0.1);

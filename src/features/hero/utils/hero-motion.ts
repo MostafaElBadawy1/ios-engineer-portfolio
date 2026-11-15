@@ -22,7 +22,13 @@ export function initHero(): void {
   const rest = hero.querySelectorAll<HTMLElement>("[data-hero-meta] > [data-intro], [data-scroll-cue]");
   if (!name) return;
 
-  const split = SplitText.create(name, { type: "chars", mask: "chars", aria: "auto" });
+  const split = SplitText.create(name, {
+    type: "words,chars",
+    mask: "chars",
+    aria: "auto",
+    charsClass: "split-char",
+    wordsClass: "split-word",
+  });
   gsap.set([name, ...rest], { visibility: "visible" });
   releaseIntro();
 

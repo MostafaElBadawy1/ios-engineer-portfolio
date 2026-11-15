@@ -10,13 +10,13 @@ const sections = [
 ---
 
 <header class="site-header" data-header>
-  <a href="#top" class="font-display text-base font-semibold text-text no-underline">
+  <a href="#top" class="brand font-display font-semibold text-text no-underline">
     {profile.name}
   </a>
   <nav aria-label="Primary">
     <ul class="flex items-center gap-1 sm:gap-6">
       {sections.map((s) => (
-        <li class="max-sm:hidden">
+        <li class:list={[s.id === "about" && "max-sm:hidden"]}>
           <a href={`#${s.id}`} class="nav-link" data-nav={s.id}>
             {s.label}
           </a>
@@ -50,6 +50,10 @@ const sections = [
     background: rgb(3 10 16 / 0.92);
     border-color: var(--color-line);
   }
+  .brand {
+    white-space: nowrap;
+    font-size: clamp(0.875rem, 3.6vw, 1rem);
+  }
   .nav-link {
     position: relative;
     display: inline-flex;
@@ -77,6 +81,16 @@ const sections = [
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 500ms var(--ease-out-expo);
+  }
+  @media (max-width: 400px) {
+    .nav-link {
+      padding: 0 0.4rem;
+      font-size: 0.875rem;
+    }
+    .nav-link::after {
+      left: 0.4rem;
+      right: 0.4rem;
+    }
   }
   .nav-link[aria-current]::after {
     transform: scaleX(1);

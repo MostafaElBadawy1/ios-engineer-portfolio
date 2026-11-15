@@ -44,18 +44,11 @@ export const profile: Profile = {
     { name: "iOS", items: ["Swift", "SwiftUI", "UIKit", "Swift Concurrency", "Combine", "RxSwift"] },
     {
       name: "Data and networking",
-      items: ["SwiftData", "Core Data", "REST APIs and Codable", "Alamofire", "Keychain"],
+      items: ["SwiftData", "Core Data", "Supabase", "Alamofire", "Keychain"],
     },
     {
       name: "Platform features",
-      items: [
-        "Push notifications",
-        "MapKit and Core Location",
-        "Payments and StoreKit",
-        "Localization and RTL",
-        "Dark mode",
-        "Accessibility",
-      ],
+      items: ["Push notifications", "MapKit and Core Location", "Payments and StoreKit"],
     },
     { name: "Architecture", items: ["Clean Architecture", "MVVM", "Modularization", "SOLID", "Unit testing"] },
     { name: "Testing and release", items: ["XCTest", "Instruments", "App Store Connect", "Fastlane", "CI/CD"] },

@@ -7,9 +7,11 @@ export interface AppLinkProps {
   href: string;
   external?: boolean;
   tone?: "default" | "accent";
+  /** Full accessible name when the visible text is shorter than the context needs. */
+  ariaLabel?: string;
   class?: string;
 }
-const { href, external = false, tone = "default", class: className } = Astro.props as AppLinkProps;
+const { href, external = false, tone = "default", ariaLabel, class: className } = Astro.props as AppLinkProps;
 ---
 
 <a
@@ -17,6 +19,7 @@ const { href, external = false, tone = "default", class: className } = Astro.pro
   class:list={["app-link", `app-link--${tone}`, className]}
   target={external ? "_blank" : undefined}
   rel={external ? "noopener noreferrer" : undefined}
+  aria-label={ariaLabel}
 >
   <slot />
 </a>

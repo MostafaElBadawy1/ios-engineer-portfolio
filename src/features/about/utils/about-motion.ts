@@ -35,7 +35,13 @@ export function initAbout(): void {
   }
 
   section.querySelectorAll<HTMLElement>("[data-reveal-title]").forEach((title) => {
-    const split = SplitText.create(title, { type: "chars", mask: "chars", aria: "auto" });
+    const split = SplitText.create(title, {
+      type: "words,chars",
+      mask: "chars",
+      aria: "auto",
+      charsClass: "split-char",
+      wordsClass: "split-word",
+    });
     gsap.from(split.chars, {
       yPercent: 110,
       duration: 1.1,
