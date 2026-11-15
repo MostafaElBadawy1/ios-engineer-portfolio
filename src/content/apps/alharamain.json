@@ -1,18 +1,21 @@
 {
   "name": "Alharamain",
-  "summary": "Services for visitors on their journey at the Grand Mosque in Mecca.",
+  "alternateName": "Haramain Sharifain Smart App",
+  "summary": "The official app of the General Presidency for the Affairs of the Grand Mosque and the Prophet’s Mosque, serving pilgrims and visitors to Mecca and Medina.",
   "role": "iOS Engineer",
   "organization": "Fixed Solutions",
   "market": "Saudi Arabia",
   "status": "live",
   "storeUrl": "https://apps.apple.com/eg/app/id1115020295",
   "contributions": [
-    "Worked on the iOS app that serves visitors throughout their journey at the Grand Mosque."
+    "Worked on the official app that serves pilgrims and visitors at the Grand Mosque and the Prophet’s Mosque.",
+    "It brings together prayer times, live broadcasts of prayers, wayfinding inside both mosques, news, and e-services for visitors."
   ],
   "icon": {
     "monogram": "Hr",
     "tint": "#0E2A3D",
-    "ink": "#FDF0D5"
+    "ink": "#FDF0D5",
+    "image": "alharamain.png"
   },
   "order": 6
 }

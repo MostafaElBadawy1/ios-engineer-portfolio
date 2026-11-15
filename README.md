@@ -87,7 +87,7 @@ Real artwork lives in `src/assets/icons/` and is referenced by file name from ea
 (`"icon": { "image": "visitors.png", ... }`). It is served as AVIF/WebP and masked to the iOS squircle.
 Apps without an image show a clearly marked placeholder (monogram, dashed keyline, "PH").
 
-Still missing: Alharamain. Use a square export, ideally a 1024×1024 PNG.
+Every app currently has real artwork. Use square exports, ideally 1024×1024 PNG.
 
 ## Deploy to Cloudflare
 
