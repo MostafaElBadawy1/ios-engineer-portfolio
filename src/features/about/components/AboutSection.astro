@@ -23,7 +23,7 @@ import { profile } from "../../../content/profile";
           src={portrait}
           alt="Mostafa El-Badawy, smiling, in a brown puffer jacket by the sea at night"
           widths={[360, 540, 720, 960]}
-          sizes="(min-width: 1024px) 30vw, 90vw"
+          sizes="(min-width: 640px) 20rem, 90vw"
           formats={["avif", "webp"]}
           loading="lazy"
           class="h-full w-full object-cover"
@@ -55,7 +55,7 @@ import { profile } from "../../../content/profile";
   }
   @media (min-width: 1024px) {
     .about__grid {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
       gap: 6rem;
       align-items: start;
     }
@@ -66,12 +66,7 @@ import { profile } from "../../../content/profile";
   }
   .about__portrait {
     margin: 0;
-    max-width: 28rem;
-  }
-  @media (min-width: 1024px) {
-    .about__portrait {
-      max-width: none;
-    }
+    width: min(100%, 20rem);
   }
   .about__frame {
     overflow: hidden;
@@ -80,7 +75,7 @@ import { profile } from "../../../content/profile";
   .about__portrait :global(img) {
     aspect-ratio: 4 / 5;
     border-radius: var(--radius-card);
-    object-position: 50% 22%;
+    object-position: 50% 30%;
   }
 </style>
 

@@ -22,7 +22,8 @@ export const profile: Profile = {
       role: "iOS Engineer",
       organization: "Fixed Solutions",
       period: "Aug 2023 – Present",
-      detail: "Public-service apps for Egypt and Saudi Arabia: Electricity Services, Visitors, Alharamain, and Act Plus.",
+      detail:
+        "Public-service apps for Egypt and Saudi Arabia: Electricity Services, Visitors, Study in Egypt, Alharamain, and Act Plus.",
     },
     {
       role: "iOS Engineer, freelance",

@@ -13,7 +13,11 @@
     "Home appliance tracking is coming soon."
   ],
   "stack": ["SwiftUI", "SwiftData"],
-  "icon": { "monogram": "Fk", "tint": "#0B2030", "ink": "#FDF0D5" },
-  "order": 7,
+  "icon": {
+    "monogram": "Fk",
+    "tint": "#0B2030",
+    "ink": "#FDF0D5"
+  },
+  "order": 8,
   "ownApp": true
 }

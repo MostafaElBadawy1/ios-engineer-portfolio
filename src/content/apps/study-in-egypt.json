@@ -1,0 +1,31 @@
+{
+  "name": "Study in Egypt",
+  "alternateName": "Study in Egypt Admission",
+  "summary": "One place for international students to explore Egypt’s universities, apply, pay, and follow their application to confirmation.",
+  "role": "iOS Engineer",
+  "organization": "Fixed Solutions",
+  "market": "Egypt",
+  "status": "live",
+  "storeUrl": "https://apps.apple.com/us/app/study-in-egypt-admission/id1522209365",
+  "metrics": [
+    {
+      "value": "300+",
+      "label": "higher-education institutions"
+    },
+    {
+      "value": "3",
+      "label": "languages"
+    }
+  ],
+  "contributions": [
+    "Worked on the admission app that lets students browse a directory of 300+ higher-education institutions, chat with them, apply, and pay online.",
+    "Students track each application from submission to confirmation, in Arabic, English, or French."
+  ],
+  "icon": {
+    "monogram": "SE",
+    "tint": "#FDF0D5",
+    "ink": "#071722",
+    "image": "study-in-egypt.png"
+  },
+  "order": 4
+}
