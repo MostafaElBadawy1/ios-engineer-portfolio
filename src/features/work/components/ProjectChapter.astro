@@ -134,10 +134,20 @@ const meta = [data.role, data.organization, data.market].filter(Boolean).join(" 
     flex-direction: column;
     gap: 1.5rem;
   }
+  /* Lay the phone out at its real size, then scale the whole device so corners, text,
+     and the info card keep their proportions instead of overflowing a shrunken frame. */
   .chapter__phone {
     display: grid;
     justify-items: center;
-    --phone-w: min(11.5rem, 50vw);
+    --phone-w: 18.5rem;
+  }
+  .chapter__phone > :global(.phone) {
+    zoom: 0.72;
+  }
+  @media (max-width: 360px) {
+    .chapter__phone > :global(.phone) {
+      zoom: 0.62;
+    }
   }
   .contrib {
     display: grid;
