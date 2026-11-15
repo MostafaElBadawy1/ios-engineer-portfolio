@@ -91,17 +91,16 @@ Every app currently has real artwork. Use square exports, ideally 1024×1024 PNG
 
 ## Deploy to Cloudflare
 
-The site is fully static. `wrangler.jsonc` serves `./dist` as Workers static assets, with `public/_headers` for
-security headers and long-lived caching of hashed assets.
+Live at **https://mostafaelbadawy.com** and **https://www.mostafaelbadawy.com**.
+
+The site is fully static. `wrangler.jsonc` serves `./dist` as Workers static assets on both custom domains,
+with `public/_headers` for security headers and long-lived caching of hashed assets. To ship a change:
 
 ```bash
-npx wrangler login
 npm run deploy
 ```
 
-Or connect the GitHub repo in the Cloudflare dashboard (Workers & Pages → Create → Import repository) with
-build command `npm run build` and deploy command `npx wrangler deploy`. Then add `mostafaelbadawy.com` under the
-Worker's Settings → Domains & Routes.
+This runs the type-check and build, then `wrangler deploy`. Wrangler needs a one-time `npx wrangler login`.
 
 ## Motion and accessibility notes
 
