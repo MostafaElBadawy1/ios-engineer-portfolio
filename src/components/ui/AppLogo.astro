@@ -1,0 +1,31 @@
+---
+/**
+ * Brand mark: a cream "M" on an accent squircle, drawn like an app icon.
+ * Decorative next to the name; public/favicon.svg uses the same drawing.
+ */
+export interface AppLogoProps {
+  class?: string;
+}
+const { class: className } = Astro.props as AppLogoProps;
+---
+
+<svg class:list={["app-logo", className]} viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <path d="M64 32c0 25-7 32-32 32S0 57 0 32 7 0 32 0s32 7 32 32z" fill="var(--color-accent)"></path>
+  <path
+    d="M18 44V21l14 15 14-15v23"
+    fill="none"
+    stroke="var(--color-text)"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  ></path>
+</svg>
+
+<style>
+  .app-logo {
+    display: block;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+</style>
