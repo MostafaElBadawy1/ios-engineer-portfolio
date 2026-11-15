@@ -1,11 +1,43 @@
 # mostafaelbadawy.com
 
-Personal portfolio of Mostafa El-Badawy, iOS Engineer. A static Astro site with scroll-driven storytelling:
-intro, about, a sticky iPhone that opens each app as you scroll, and a contact finale.
+**The portfolio of Mostafa El-Badawy, iOS Engineer.** A scroll-driven, cinematic one-pager: as you scroll, a sticky iPhone opens each app I've shipped, over a canvas grid that bends around your cursor.
 
-**Stack:** Astro 7 · TypeScript (strict) · Tailwind CSS v4 · GSAP + ScrollTrigger + SplitText · Cloudflare Workers (static assets)
+**Live:** [mostafaelbadawy.com](https://mostafaelbadawy.com)
+
+![Desktop: the hero over the bending grid](.github/readme/desktop.png)
+
+<p align="center">
+  <img src=".github/readme/phone.png" alt="The site on an iPhone" width="260" />
+  &nbsp;&nbsp;
+  <img src=".github/readme/phone-mockup.png" alt="The phone mockup inside a project on mobile" width="330" />
+</p>
+
+## Highlights
+
+- **Scroll storytelling with native scrolling.** GSAP ScrollTrigger drives the story, with no scroll hijacking and no smooth-scroll library. Only transforms, opacity, clip-path, and colour animate, so it holds 60fps.
+- **A sticky iPhone that runs the Work section.** It starts on a home screen of real app icons, then opens each app as its chapter scrolls into view. On phones every chapter gets its own scaled replica of the device.
+- **A living background.** A canvas grid lenses around the cursor with a smooth Gaussian falloff, and each section relights it through CSS variables.
+- **Content-driven.** Each project is one JSON file, validated with Zod. Add a file and the site builds a chapter, a phone screen, a home-screen icon, and a rail entry for it.
+- **Real iOS icons.** Each icon is clipped to a true superellipse squircle and served as AVIF/WebP.
+- **An ATS-friendly CV.** It's rendered from HTML to PDF and shown in an in-page viewer with a download button.
+- **Accessible by default.** It works with `prefers-reduced-motion`, a keyboard, and a screen reader, and passes axe with zero violations.
+- **Fast.** Lighthouse scores 100/100/100/100 on desktop and 99+ on mobile, with no layout shift. Below-the-fold animation waits for idle time.
+
+## Tech stack
+
+| Layer      | Choice                                                   |
+| ---------- | -------------------------------------------------------- |
+| Framework  | [Astro 7](https://astro.build) (fully static output)     |
+| Language   | TypeScript (strict)                                      |
+| Styling    | Tailwind CSS v4 with `@theme` design tokens              |
+| Motion     | GSAP 3: ScrollTrigger and SplitText                      |
+| Typography | Red Hat Display, Text, and Mono (self-hosted variable)   |
+| Quality    | Vitest, ESLint (typescript-eslint, astro), Prettier      |
+| Hosting    | Cloudflare Workers static assets, deployed with Wrangler |
 
 ## Run locally
+
+Requires Node 22+.
 
 ```bash
 npm install
@@ -31,21 +63,38 @@ src/
   content/profile.ts       bio, links, experience, skills, education
   components/ui/           design-system primitives: AppIcon, AppButton, AppLink, AppIconGlyph
   features/
-    background/            canvas grid that bends around the cursor + section lighting
-    hero/  about/  work/  contact/  site/
+    background/            canvas grid that bends around the cursor, plus section lighting
+    hero/ about/ work/ contact/ cv/ site/
       components/          Astro components for that section
       utils/               motion and pure helpers
       __tests__/           Vitest tests
   lib/motion.ts            GSAP facade: plugin registration, reduced motion, idle scheduling
-  styles/global.css        design tokens (@theme) — the only place colours, fonts and sizes are defined
+  styles/global.css        design tokens (@theme), the only place colours, fonts, and sizes are defined
 cv/cv.html                 source of the ATS-friendly CV
 scripts/                   renders cv.pdf and og.png
-previews/                  Phase A design explorations (not part of the build)
+previews/                  early design explorations (not part of the build)
 ```
+
+The code is organised by feature: each section owns its components, motion, and tests. Screens compose the `App*` primitives in `components/ui`, so a single edit there updates the whole site.
+
+## Design system
+
+Dark only, with a deliberate palette. Accent red is used for fills, never for small text.
+
+| Token       | Hex       | Use                            |
+| ----------- | --------- | ------------------------------ |
+| bg          | `#030A10` | Page background                |
+| surface     | `#071722` | Cards, phone screens           |
+| text        | `#FDF0D5` | Primary text                   |
+| muted       | `#8FA5B3` | Secondary text                 |
+| accent      | `#C1121F` | Fills: buttons, underlines     |
+| accent-text | `#F0606A` | Accent text (passes contrast)  |
+| accent-deep | `#780000` | Depth and pressed states       |
+| secondary   | `#669BBC` | Chips, markers, quiet emphasis |
 
 ## Add a project
 
-1. Create `src/content/apps/<slug>.json`. Copy an existing file and edit it:
+1. Create `src/content/apps/<slug>.json`. You can copy an existing file:
 
    ```json
    {
@@ -59,19 +108,18 @@ previews/                  Phase A design explorations (not part of the build)
      "metrics": [{ "value": "50k+", "label": "downloads" }],
      "contributions": ["What you built, in one sentence each."],
      "stack": ["SwiftUI", "MVVM"],
-     "icon": { "monogram": "Ma", "tint": "#071722", "ink": "#FDF0D5" },
-     "order": 7
+     "icon": { "monogram": "Ma", "tint": "#071722", "ink": "#FDF0D5", "image": "my-app.png" },
+     "order": 10
    }
    ```
 
-2. `order` sets its position in Selected Work. Only include metrics you can back up.
-3. Run `npm run build`. The schema rejects missing or malformed fields with a clear error.
+2. Put the icon in `src/assets/icons/`, as a square PNG (1024×1024 is ideal).
+3. `order` sets the app's position in Selected Work. Only include metrics you can back up.
+4. Run `npm run build`. The schema rejects missing or malformed fields with a clear error.
 
-The project automatically gets a chapter, a phone screen, a home-screen icon, and a rail entry.
+### App pages for apps you own
 
-## Add an app page (`/fakker`, `/fakker/privacy`, `/fakker/support`)
-
-App Store listings need a landing, privacy, and support URL. For an app you own, add these fields to its JSON file:
+App Store listings need a landing page, a privacy policy, and a support URL. Add these fields to the app's JSON file:
 
 ```json
 "ownApp": true,
@@ -79,32 +127,25 @@ App Store listings need a landing, privacy, and support URL. For an app you own,
 "supportEmail": "support@mostafaelbadawy.com"
 ```
 
-The file name becomes the URL: `src/content/apps/fakker.json` builds `/fakker`, `/fakker/privacy`, and `/fakker/support`.
+The file name becomes the URL: `fakker.json` builds `/fakker`, `/fakker/privacy`, and `/fakker/support`.
 
-## App icons
+## Deploy
 
-Real artwork lives in `src/assets/icons/` and is referenced by file name from each app's JSON
-(`"icon": { "image": "visitors.png", ... }`). It is served as AVIF/WebP and masked to the iOS squircle.
-Apps without an image show a clearly marked placeholder (monogram, dashed keyline, "PH").
-
-Every app currently has real artwork. Use square exports, ideally 1024×1024 PNG.
-
-## Deploy to Cloudflare
-
-Live at **https://mostafaelbadawy.com** and **https://www.mostafaelbadawy.com**.
-
-The site is fully static. `wrangler.jsonc` serves `./dist` as Workers static assets on both custom domains,
-with `public/_headers` for security headers and long-lived caching of hashed assets. To ship a change:
+The site is fully static. `wrangler.jsonc` serves `./dist` as Workers static assets on `mostafaelbadawy.com` and `www.mostafaelbadawy.com`. `public/_headers` sets the security headers (CSP, nosniff, referrer policy) and long-lived caching for hashed assets.
 
 ```bash
+npx wrangler login   # once
 npm run deploy
 ```
 
-This runs the type-check and build, then `wrangler deploy`. Wrangler needs a one-time `npx wrangler login`.
+## Motion and accessibility
 
-## Motion and accessibility notes
+- With `prefers-reduced-motion`, the intros, scrubs, and cursor lens turn off, the phone switches apps instantly, and all content stays visible.
+- Every animated element has a static, readable state. The phone mockups are decorative (`aria-hidden`), and each chapter's text carries the real content.
+- Text that animates in is split into words and characters with masks, and the masks are padded so descenders are never clipped.
 
-- Native scrolling only: no scroll hijacking or smooth-scroll libraries. Only transforms, opacity, clip-path, and colour animate.
-- `prefers-reduced-motion`: intros, scrubs, and the cursor lens are off; the phone switches apps instantly; all content stays visible.
-- Below-the-fold animation setup runs when the main thread is idle, so the hero paints first.
-- Last audit: Lighthouse desktop 100/100/100/100, mobile 99/100/100/100; axe: 0 violations; no layout shift.
+## Contact
+
+[contact@mostafaelbadawy.com](mailto:contact@mostafaelbadawy.com) · [LinkedIn](https://linkedin.com/in/mostafa-elbadawy) · [GitHub](https://github.com/MostafaElBadawy1)
+
+© Mostafa El-Badawy. The code is shared for reference. The content, CV, and app artwork belong to their owners.
