@@ -9,7 +9,8 @@ export interface BaseLayoutProps {
   description: string;
 }
 const { title, description } = Astro.props as BaseLayoutProps;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// build.format "file" makes Astro.url end in .html; the site is served without it.
+const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ""), Astro.site);
 const ogImage = new URL("/og.png", Astro.site);
 const person = {
   "@context": "https://schema.org",
